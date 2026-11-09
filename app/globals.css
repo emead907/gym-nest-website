@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #23265c;
+}
+
+/* The Gym Nest brand: navy wordmark, orchid and aqua figures, lime nest.
+   Lime is bright and hard to read, so it's only for tiny accents. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: #2c3070;
+  --color-navy-dark: #1f2152;
+  --color-ink: #23265c;
+  --color-muted: #4b4e7e;
+  --color-orchid: #da64ea;
+  --color-orchid-dark: #9c2fae;
+  --color-orchid-tint: #f8eafb;
+  --color-aqua: #97e2e3;
+  --color-aqua-tint: #e3f6f6;
+  --color-line: #cbeaea;
+  --color-lime: #96fa5f;
+  --color-amber: #8a5a00;
+  --color-full: #9a3412;
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-fredoka);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+:focus-visible { outline: 3px solid #da64ea; outline-offset: 2px; border-radius: 6px; }

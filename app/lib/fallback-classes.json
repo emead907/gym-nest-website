@@ -1,0 +1,1343 @@
+[
+{
+"id": "20474872",
+"name": "Cheer Rec",
+"category": "Cheer",
+"location": "Eagle",
+"days": [
+"Tue"
+],
+"start": "6:30 PM",
+"end": "7:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Faith P."
+],
+"openings": 5,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474875",
+"name": "Cheer Rec",
+"category": "Cheer",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "6:30 PM",
+"end": "7:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Samantha S."
+],
+"openings": 3,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474853",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "6:45 PM",
+"end": "7:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Samantha S."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474841",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "5:00 PM",
+"end": "6:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Josie N."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474846",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "6:30 PM",
+"end": "7:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474849",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "6:45 PM",
+"end": "7:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Josie N."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "21745124",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "5:30 PM",
+"end": "6:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Samantha S."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474888",
+"name": "Happy Hoppers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "4:30 PM",
+"end": "5:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085481",
+"name": "Happy Hoppers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Fri"
+],
+"start": "9:30 AM",
+"end": "10:15 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Shelby B."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085315",
+"name": "Homeschool Gymnastics",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "2:00 PM",
+"end": "3:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Josie N."
+],
+"openings": 0,
+"max": 8,
+"regLink": null
+},
+{
+"id": "22085154",
+"name": "Homeschool Gymnastics",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "2:00 PM",
+"end": "3:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Melia D."
+],
+"openings": 0,
+"max": 7,
+"regLink": null
+},
+{
+"id": "20474978",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "5:30 PM",
+"end": "6:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Josie N."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474929",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "6:30 PM",
+"end": "7:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Madison D."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474933",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "4:30 PM",
+"end": "5:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Josie N."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474981",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "6:45 PM",
+"end": "7:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20474985",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "4:30 PM",
+"end": "5:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Samantha S."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20737522",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "5:30 PM",
+"end": "6:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Samantha S."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085497",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Fri"
+],
+"start": "10:15 AM",
+"end": "11:15 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Melia D."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475175",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "4:30 PM",
+"end": "5:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Faith P."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475171",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "4:30 PM",
+"end": "5:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Samantha S."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475118",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "5:15 PM",
+"end": "6:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Madison D."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085469",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Fri"
+],
+"start": "10:15 AM",
+"end": "11:15 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Shelby B."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085423",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "1:00 PM",
+"end": "2:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Melia D."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22326289",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "3:00 PM",
+"end": "4:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 5,
+"max": 5,
+"regLink": null
+},
+{
+"id": "20475241",
+"name": "Tiny Tumblers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "4:30 PM",
+"end": "5:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Madison D."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475259",
+"name": "Tiny Tumblers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "4:30 PM",
+"end": "5:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 3,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085396",
+"name": "Tiny Tumblers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Fri"
+],
+"start": "9:30 AM",
+"end": "10:15 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Melia D."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085376",
+"name": "Tiny Tumblers",
+"category": "Gymnastics",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "3:00 PM",
+"end": "3:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Josie N."
+],
+"openings": 6,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085332",
+"name": "Homeschool Ninja",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "2:00 PM",
+"end": "3:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Shelby B."
+],
+"openings": 4,
+"max": 8,
+"regLink": null
+},
+{
+"id": "22085157",
+"name": "Homeschool Ninja",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "2:00 PM",
+"end": "3:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 5,
+"max": 8,
+"regLink": null
+},
+{
+"id": "20248425",
+"name": "Mini Ninja Turtles",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "5:30 PM",
+"end": "6:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Arina B."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475048",
+"name": "Mini Ninja Turtles",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "4:30 PM",
+"end": "5:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Arina B."
+],
+"openings": 5,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22085508",
+"name": "Mini Ninja Turtles",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Fri"
+],
+"start": "11:15 AM",
+"end": "12:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Melia D."
+],
+"openings": 6,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20253677",
+"name": "Ninja",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "6:30 PM",
+"end": "7:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Arina B."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475101",
+"name": "Ninja",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "6:30 PM",
+"end": "7:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Arina B."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475107",
+"name": "Ninja",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "5:30 PM",
+"end": "6:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475084",
+"name": "Ninja Turtles",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Thu"
+],
+"start": "4:30 PM",
+"end": "5:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Sophie M."
+],
+"openings": 3,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475076",
+"name": "Ninja Turtles",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Mon"
+],
+"start": "5:30 PM",
+"end": "6:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Arina B."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20475080",
+"name": "Ninja Turtles",
+"category": "Ninja",
+"location": "Eagle",
+"days": [
+"Wed"
+],
+"start": "4:30 PM",
+"end": "5:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Arina B."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22089087",
+"name": "Cheer Rec",
+"category": "Cheer",
+"location": "Nampa",
+"days": [
+"Mon"
+],
+"start": "7:00 PM",
+"end": "8:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Payton S."
+],
+"openings": 5,
+"max": 8,
+"regLink": null
+},
+{
+"id": "18818092",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Thu"
+],
+"start": "7:00 PM",
+"end": "8:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22139880",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Mon"
+],
+"start": "4:45 PM",
+"end": "5:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Paisley B."
+],
+"openings": 3,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22331199",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Wed"
+],
+"start": "5:15 PM",
+"end": "6:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emma S."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "21180639",
+"name": "Beginning Tumbling",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Fri"
+],
+"start": "1:00 PM",
+"end": "2:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Paisley B."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18817384",
+"name": "Happy Hoppers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Thu"
+],
+"start": "5:00 PM",
+"end": "5:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emma S."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18817375",
+"name": "Happy Hoppers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Sat"
+],
+"start": "9:30 AM",
+"end": "10:15 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [],
+"openings": 2,
+"max": 8,
+"regLink": null
+},
+{
+"id": "21100136",
+"name": "Happy Hoppers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Wed"
+],
+"start": "4:30 PM",
+"end": "5:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emma S."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22086763",
+"name": "Happy Hoppers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Fri"
+],
+"start": "9:30 AM",
+"end": "10:15 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emery F."
+],
+"openings": 7,
+"max": 8,
+"regLink": null
+},
+{
+"id": "22488654",
+"name": "Happy Hoppers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Tue"
+],
+"start": "5:15 PM",
+"end": "6:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Gianna P."
+],
+"openings": 5,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20307578",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Wed"
+],
+"start": "1:00 PM",
+"end": "2:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emery F."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20574447",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Tue"
+],
+"start": "6:30 PM",
+"end": "7:30 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emma S."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22222899",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Thu"
+],
+"start": "5:45 PM",
+"end": "6:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emma S."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22328284",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Mon"
+],
+"start": "4:45 PM",
+"end": "5:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22496160",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Fri"
+],
+"start": "12:15 PM",
+"end": "1:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emery F."
+],
+"openings": 5,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818046",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Wed"
+],
+"start": "6:00 PM",
+"end": "7:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818058",
+"name": "Kids Rec",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Sat"
+],
+"start": "10:30 AM",
+"end": "11:30 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 4,
+"max": 8,
+"regLink": null
+},
+{
+"id": "18818031",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Sat"
+],
+"start": "10:15 AM",
+"end": "11:15 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [],
+"openings": 3,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818018",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Mon"
+],
+"start": "5:45 PM",
+"end": "6:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Paisley B."
+],
+"openings": 3,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818030",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Fri"
+],
+"start": "2:00 PM",
+"end": "3:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Paisley B."
+],
+"openings": 0,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818020",
+"name": "Rockin' Rollers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Tue"
+],
+"start": "5:00 PM",
+"end": "6:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emma S."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20760935",
+"name": "Tiny Tumblers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Tue"
+],
+"start": "4:30 PM",
+"end": "5:15 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818013",
+"name": "Tiny Tumblers",
+"category": "Gymnastics",
+"location": "Nampa",
+"days": [
+"Thu"
+],
+"start": "5:00 PM",
+"end": "5:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "20946537",
+"name": "Mini Ninja Turtles",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Wed"
+],
+"start": "6:00 PM",
+"end": "6:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Brenna P."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818112",
+"name": "Mini Ninja Turtles",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Fri"
+],
+"start": "1:15 PM",
+"end": "2:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emery F."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818111",
+"name": "Mini Ninja Turtles",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Tue"
+],
+"start": "6:00 PM",
+"end": "6:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Gianna P."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22328737",
+"name": "Ninja",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Tue"
+],
+"start": "6:45 PM",
+"end": "8:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Paisley B."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818127",
+"name": "Ninja",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Mon"
+],
+"start": "6:45 PM",
+"end": "8:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 2,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22086588",
+"name": "Ninja Rec",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Wed"
+],
+"start": "3:00 PM",
+"end": "4:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Emery F."
+],
+"openings": 4,
+"max": 6,
+"regLink": null
+},
+{
+"id": "18818122",
+"name": "Ninja Turtles",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Wed"
+],
+"start": "5:00 PM",
+"end": "6:00 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "21309923",
+"name": "Ninja Turtles",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Sat"
+],
+"start": "9:30 AM",
+"end": "10:30 AM",
+"minAge": "",
+"maxAge": "",
+"instructors": [],
+"openings": 1,
+"max": 6,
+"regLink": null
+},
+{
+"id": "22139790",
+"name": "Ninja Turtles",
+"category": "Ninja",
+"location": "Nampa",
+"days": [
+"Mon"
+],
+"start": "5:45 PM",
+"end": "6:45 PM",
+"minAge": "",
+"maxAge": "",
+"instructors": [
+"Maddy N."
+],
+"openings": 3,
+"max": 6,
+"regLink": null
+}
+]
