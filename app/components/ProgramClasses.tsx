@@ -9,7 +9,7 @@ import { TrialForm, type TrialMode } from "./TrialForm";
 export interface Slot { id: string; day: string; time: string; when: string; openings: number | null; regLink: string }
 export interface ProgramCard { name: string; ages: string; length: string; about: string; invite: boolean; slots: Slot[] }
 
-type Picked = { className: string; classId?: string; requestedTime: string; label: string; mode: TrialMode };
+type Picked = { className: string; classId?: string; requestedTime: string; label: string; mode: TrialMode; regLink?: string };
 
 const ACCENTS = [
   { pill: "bg-aqua-tint text-navy", bar: "bg-aqua" },
@@ -65,19 +65,13 @@ export function ProgramClasses({ location, cards, otherHref }: { location: Locat
                             </p>
                           )}
                         </div>
-                        {full ? (
-                          <button
-                            type="button"
-                            onClick={() => setPicked({ className: c.name, classId: s.id, requestedTime: s.when, label: `${s.day} · ${s.time}`, mode: "waitlist" })}
-                            className="min-h-11 shrink-0 rounded-full border-2 border-full/40 bg-white px-4 text-sm font-extrabold text-full hover:bg-[#fff4ee]"
-                          >
-                            Join waitlist
-                          </button>
-                        ) : (
-                          <a href={s.regLink} className="inline-flex min-h-11 shrink-0 items-center rounded-full bg-navy px-4 text-sm font-extrabold text-white hover:bg-navy-dark">
-                            Enroll
-                          </a>
-                        )}
+                        <button
+                          type="button"
+                          onClick={() => setPicked({ className: c.name, classId: s.id, requestedTime: s.when, label: `${s.day} · ${s.time}`, mode: full ? "waitlist" : "trial", regLink: s.regLink })}
+                          className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-extrabold ${full ? "border-2 border-full/40 bg-white text-full hover:bg-[#fff4ee]" : "bg-navy text-white hover:bg-navy-dark"}`}
+                        >
+                          {full ? "Join waitlist" : "Request this class"}
+                        </button>
                       </li>
                     );
                   })}
@@ -136,7 +130,7 @@ function TrialDialog({ location, picked, onClose }: { location: LocationKey; pic
           </button>
         </div>
         <div className="mt-6">
-          <TrialForm req={{ location, classId: picked.classId, className: picked.className, requestedTime: picked.requestedTime, mode: picked.mode, source: "program-page" }} />
+          <TrialForm req={{ location, classId: picked.classId, className: picked.className, requestedTime: picked.requestedTime, mode: picked.mode, source: "program-page", regLink: picked.regLink }} />
         </div>
       </div>
     </div>

@@ -108,7 +108,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="font-display text-3xl font-bold text-navy sm:text-4xl">{l.name} {p.title.toLowerCase()} classes</h2>
-            <p className="mt-2 max-w-2xl text-muted">Pick a day and time to enroll in our secure registration. Your first day is no-risk: if it isn&rsquo;t the right fit, tell us within 24 hours of that class and you won&rsquo;t be charged. Open spots update throughout the day.</p>
+            <p className="mt-2 max-w-2xl text-muted">Pick a day and time and request the class. Your first day is no-risk: if it isn&rsquo;t the right fit, tell us within 24 hours of that class and you won&rsquo;t be charged. Open spots update throughout the day.</p>
           </div>
           <Link href={classesPath(loc, p.finder)} className="font-extrabold text-navy underline">Compare every class in the class finder →</Link>
         </div>

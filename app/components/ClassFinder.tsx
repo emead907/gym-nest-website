@@ -177,7 +177,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-extrabold uppercase tracking-widest text-aqua">
-                        {open.mode === "register" ? "Enroll" : "Join the waitlist"} · The Gym Nest {LOCATIONS[c.location].name}
+                        {open.mode === "register" ? "Enroll" : full ? "Join the waitlist" : "Request this class"} · The Gym Nest {LOCATIONS[c.location].name}
                       </p>
                       <h3 className="mt-2 font-display text-3xl font-semibold">{c.name}</h3>
                       <p className="mt-1 text-[#dcddf6]">{when(c)} · {c.ages}</p>
@@ -186,7 +186,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
                   </div>
                   {open.mode === "trial" ? (
                     <div className="mt-6 max-w-3xl">
-                      <TrialForm tone="dark" req={{ location: c.location, classId: c.id, className: c.name, requestedTime: when(c), mode: full ? "waitlist" : "trial", source: "class-finder" }} />
+                      <TrialForm tone="dark" req={{ location: c.location, classId: c.id, className: c.name, requestedTime: when(c), mode: full ? "waitlist" : "trial", source: "class-finder", regLink: c.regLink }} />
                     </div>
                   ) : (
                     <div className="mt-6 max-w-2xl rounded-2xl bg-white/10 p-6">
@@ -236,7 +236,7 @@ function FinderCard({ c, isOpen, full, onTrial, onRegister, children }: { c: Sit
           {full ? (
             <button type="button" onClick={onTrial} className="min-h-12 flex-1 rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Join waitlist</button>
           ) : (
-            <button type="button" onClick={onRegister} className="min-h-12 flex-1 rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Enroll</button>
+            <button type="button" onClick={onTrial} className="min-h-12 flex-1 rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Request this class</button>
           )}
         </div>
       </article>

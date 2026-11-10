@@ -13,6 +13,8 @@ export interface TrialRequest {
   requestedTime: string;
   mode: TrialMode;
   source: "program-page" | "class-finder";
+  /** Jackrabbit registration for this class, offered after they submit. */
+  regLink?: string;
 }
 
 /**
@@ -50,13 +52,25 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
     return (
       <div className={`rounded-2xl p-6 ${dark ? "bg-white/10" : "bg-aqua-tint"}`} role="status">
         <p className={`font-display text-2xl font-semibold ${dark ? "" : "text-navy"}`}>
-          {req.mode === "waitlist" ? "You're on the waitlist!" : req.mode === "evaluation" ? "Evaluation requested!" : "Request sent!"}
+          {req.mode === "waitlist" ? "You're on the waitlist!" : req.mode === "evaluation" ? "Evaluation requested!" : `Thanks for requesting ${req.className}!`}
         </p>
-        <p className={`mt-2 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
-          {req.mode === "waitlist"
-            ? `We'll reach out as soon as a spot opens in ${req.className}.`
-            : `Our ${gym} front desk will reach out within one business day to set it up.`}
-        </p>
+        {req.mode === "trial" && req.regLink ? (
+          <>
+            <p className={`mt-3 font-bold ${dark ? "" : "text-ink"}`}>Ready to get started now?</p>
+            <a href={req.regLink} className={`mt-2 inline-flex min-h-12 items-center rounded-full px-7 font-extrabold ${dark ? "bg-orchid text-navy-dark hover:brightness-105" : "bg-navy text-white hover:bg-navy-dark"}`}>
+              Enroll here
+            </a>
+            <p className={`mt-3 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
+              Or our {gym} front desk will reach out soon to help you through the process. Your first day is no-risk.
+            </p>
+          </>
+        ) : (
+          <p className={`mt-2 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
+            {req.mode === "waitlist"
+              ? `We'll reach out as soon as a spot opens in ${req.className}.`
+              : `Our ${gym} front desk will reach out within one business day to set it up.`}
+          </p>
+        )}
       </div>
     );
   }
@@ -84,7 +98,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
         disabled={state === "sending"}
         className={`min-h-12 rounded-full font-extrabold disabled:opacity-60 sm:col-span-2 ${dark ? "bg-orchid text-navy-dark hover:brightness-105" : "bg-navy text-white hover:bg-navy-dark"}`}
       >
-        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Send request"}
+        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Request this class"}
       </button>
       {state === "error" && <p className={`text-sm font-bold sm:col-span-2 ${dark ? "text-orchid" : "text-full"}`}>Something went wrong. Please call us at 208-278-2011.</p>}
     </form>
