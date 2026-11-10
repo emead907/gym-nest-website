@@ -25,6 +25,8 @@ export interface Location {
   region: "ID";
   zip: string;
   email: string;
+  /** Where website class requests are emailed (front desk). */
+  notifyEmail: string;
   /** Matches Jackrabbit's location name on each class. */
   jackrabbit: string;
   /** Nearby towns families drive in from (used in page copy for local search). */
@@ -41,6 +43,8 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     region: "ID",
     zip: "83686",
     email: "thegymnestnampa@gmail.com",
+    // TESTING: change to the Nampa front desk email when done testing.
+    notifyEmail: "gymstarsidaho@gmail.com",
     jackrabbit: "Nampa",
     serves: ["Nampa", "Caldwell", "Kuna", "Middleton", "Meridian"],
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=The+Gym+Nest+849+S+Rising+Sun+Dr+Nampa+ID+83686",
@@ -53,6 +57,8 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     region: "ID",
     zip: "83616",
     email: "info@thegymneststudio.com",
+    // TESTING: change to the Eagle front desk email when done testing.
+    notifyEmail: "gymstarsidaho@gmail.com",
     jackrabbit: "Eagle",
     serves: ["Eagle", "Star", "Meridian", "Boise", "Garden City"],
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=The+Gym+Nest+17+N+Fisher+Park+Way+Eagle+ID+83616",

@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
   const lead = {
     mode,
     location: loc.name,
-    gymEmail: loc.email,
+    gymEmail: loc.notifyEmail,
     className: s(data.className),
     requestedTime: s(data.requestedTime),
     parentFirst,
