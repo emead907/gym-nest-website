@@ -79,6 +79,7 @@ function locationOf(s: string): LocationKey | null {
   return null;
 }
 
+/** Jackrabbit online registration; with &preLoadClassID= it opens with that class picked. */
 const REG_FALLBACK = `https://app.jackrabbitclass.com/regv2.asp?id=${JACKRABBIT_ORG_ID}`;
 
 function toSiteClass(c: { id: string; name: string; category: string; location: string; days: string[]; start: string; end: string; coach: string; openings: number | null; max: number | null; regLink: string | null }): SiteClass | null {
@@ -91,7 +92,7 @@ function toSiteClass(c: { id: string; name: string; category: string; location: 
     id: c.id, name, location: loc, program: programOf(name, c.category),
     days: c.days, start: c.start, end: c.end, ages: cat.ages, bands: cat.bands, parentAndMe: !!cat.parentAndMe,
     coach: c.coach.replace(/\s+/g, " ").trim(),
-    openings: c.openings == null ? null : Math.max(0, c.openings), max: c.max, regLink: c.regLink || (c.id ? `${REG_FALLBACK}&preLoadClassID=${c.id}` : REG_FALLBACK),
+    openings: c.openings == null ? null : Math.max(0, c.openings), max: c.max, regLink: c.id ? `${REG_FALLBACK}&preLoadClassID=${c.id}` : c.regLink || REG_FALLBACK,
   };
 }
 
