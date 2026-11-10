@@ -155,7 +155,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
           </button>
         )}
       </div>
-      <p className="mt-1 text-sm text-muted">Trying a class? Choose <strong className="text-ink">Yes</strong> for trial on the registration form and your first class is free. {live ? "Open spots update live from our schedule." : "Open spots are updated throughout the day."}</p>
+      <p className="mt-1 text-sm text-muted">Every new student starts with a no-risk first day. {live ? "Open spots update live from our schedule." : "Open spots are updated throughout the day."}</p>
 
       {results.length === 0 && (
         <div className="mt-6 rounded-3xl bg-orchid-tint p-8 text-center">
@@ -177,7 +177,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-extrabold uppercase tracking-widest text-aqua">
-                        {open.mode === "register" ? "Register" : full ? "Join the waitlist" : "Try a class"} · The Gym Nest {LOCATIONS[c.location].name}
+                        {open.mode === "register" ? "Enroll" : "Join the waitlist"} · The Gym Nest {LOCATIONS[c.location].name}
                       </p>
                       <h3 className="mt-2 font-display text-3xl font-semibold">{c.name}</h3>
                       <p className="mt-1 text-[#dcddf6]">{when(c)} · {c.ages}</p>
@@ -190,12 +190,12 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
                     </div>
                   ) : (
                     <div className="mt-6 max-w-2xl rounded-2xl bg-white/10 p-6">
-                      <p className="font-display text-2xl font-semibold">Almost done!</p>
+                      <p className="font-display text-2xl font-semibold">Enroll with a no-risk first day</p>
                       <p className="mt-2 text-[#dcddf6]">You&rsquo;ll finish in our secure registration system with this class picked. It takes about 3 minutes:</p>
                       <ol className="mt-3 list-decimal space-y-1 pl-5 text-[#dcddf6]">
                         <li>Your family and child&rsquo;s info</li>
                         <li>Policies and waiver</li>
-                        <li>Payment method (first class is free; $50 registration fee for new families)</li>
+                        <li>Payment method ($50 registration fee for new families)</li>
                       </ol>
                       <a href={c.regLink} className="mt-5 inline-flex min-h-12 items-center rounded-full bg-orchid px-7 font-extrabold text-navy-dark hover:brightness-105">Continue to secure registration</a>
                     </div>
@@ -236,10 +236,7 @@ function FinderCard({ c, isOpen, full, onTrial, onRegister, children }: { c: Sit
           {full ? (
             <button type="button" onClick={onTrial} className="min-h-12 flex-1 rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Join waitlist</button>
           ) : (
-            <a href={c.regLink} className="flex min-h-12 flex-1 items-center justify-center rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Try a class</a>
-          )}
-          {!full && (
-            <button type="button" onClick={onRegister} className="min-h-12 flex-1 rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Register</button>
+            <button type="button" onClick={onRegister} className="min-h-12 flex-1 rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Enroll</button>
           )}
         </div>
       </article>

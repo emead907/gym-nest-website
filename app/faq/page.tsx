@@ -8,7 +8,7 @@ import { faqSchema, graph, pageMeta } from "../lib/seo";
 export const metadata = pageMeta({ title: "FAQ", description: "Answers to common questions about classes, ages, tuition, parties and preschool at The Gym Nest in Nampa and Eagle, Idaho.", path: "/faq" });
 
 const GENERAL = [
-  { q: "Is the first class free?", a: "Yes. New students get their first class free." },
+  { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
   { q: "Is there a registration fee?", a: "A one-time $50 registration fee for new families." },
   { q: "How do I cancel?", a: "Give written notice by the 15th of the month to stop the next month's charge." },
   { q: "How do I make up a missed class?", a: "Schedule a make-up within 30 days of the missed class." },

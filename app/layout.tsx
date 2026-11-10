@@ -13,7 +13,7 @@ const fredoka = localFont({ src: "./fonts/fredoka-latin-wght-normal.woff2", vari
 const nunito = localFont({ src: "./fonts/nunito-sans-latin-wght-normal.woff2", variable: "--font-nunito", weight: "200 1000", display: "swap" });
 
 const DESCRIPTION =
-  "Kids gymnastics, ninja, tumbling and cheer classes, preschool, open play and birthday parties in Nampa and Eagle, Idaho. Ages 18 months and up. First class free.";
+  "Kids gymnastics, ninja, tumbling and cheer classes, preschool, open play and birthday parties in Nampa and Eagle, Idaho. Ages 18 months and up. No-risk first day.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

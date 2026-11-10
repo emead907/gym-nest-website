@@ -62,7 +62,7 @@ export const LOCATION_KEYS: LocationKey[] = ["nampa", "eagle"];
 export const otherLocation = (k: LocationKey): LocationKey => (k === "nampa" ? "eagle" : "nampa");
 
 export const POLICIES = [
-  "Your child's first class is free.",
+  "Every new student starts with a no-risk first day. Not the right fit? Tell us within 24 hours of the first class and you won't be charged.",
   "A one-time $50 registration fee for new families.",
   "Month-to-month memberships. Tuition bills on the 1st.",
   "To cancel, give written notice by the 15th to stop the next month's charge.",
@@ -107,7 +107,7 @@ export const PROGRAMS: Record<ProgramKey, Program> = {
     finder: "Gymnastics",
     faqs: [
       { q: "What age can my child start gymnastics?", a: "As young as 18 months in Happy Hoppers, a parent-and-me class. Kids 3 and up take classes on their own." },
-      { q: "Is the first class really free?", a: "Yes. New students get their first class free so you can see if it's a good fit." },
+      { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
       { q: "What should my child wear?", a: "Comfortable athletic clothes or a leotard, bare feet, and hair pulled back. Please leave jewelry at home." },
       { q: "Do you have competitive gymnastics?", a: "Our gymnastics classes are recreational and non-competitive. For competition, check out Supernova Athletics, our all-star cheer program." },
     ],

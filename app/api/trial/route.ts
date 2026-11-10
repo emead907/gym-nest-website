@@ -3,7 +3,7 @@ import { isLocation, s, sendToHub } from "../../lib/hub";
 import { LOCATIONS } from "../../lib/site";
 
 /**
- * "Schedule a free trial" / waitlist / evaluation requests from the program
+ * Waitlist and evaluation requests from the program
  * pages and the class finder. Each request goes two places at once:
  *
  *  1. The Hub: that gym's trial board (Nampa or Eagle).

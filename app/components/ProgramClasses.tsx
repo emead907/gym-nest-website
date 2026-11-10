@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { CalendarDays, Clock, MapPin, X } from "lucide-react";
-import { LOCATIONS, type LocationKey } from "../lib/site";
+import { LOCATIONS, PARENT_PORTAL_URL, type LocationKey } from "../lib/site";
 import { TrialForm, type TrialMode } from "./TrialForm";
 
 export interface Slot { id: string; day: string; time: string; when: string; openings: number | null; regLink: string }
@@ -17,7 +17,7 @@ const ACCENTS = [
 ];
 
 /** Gym Stars–style class list: one card per class, every time listed under it, each with its own button. */
-export function ProgramClasses({ location, program, cards, otherHref }: { location: LocationKey; program: string; cards: ProgramCard[]; otherHref: string }) {
+export function ProgramClasses({ location, cards, otherHref }: { location: LocationKey; cards: ProgramCard[]; otherHref: string }) {
   const [picked, setPicked] = useState<Picked | null>(null);
   const gym = LOCATIONS[location];
   const other = LOCATIONS[location === "nampa" ? "eagle" : "nampa"];
@@ -75,7 +75,7 @@ export function ProgramClasses({ location, program, cards, otherHref }: { locati
                           </button>
                         ) : (
                           <a href={s.regLink} className="inline-flex min-h-11 shrink-0 items-center rounded-full bg-navy px-4 text-sm font-extrabold text-white hover:bg-navy-dark">
-                            Schedule trial
+                            Enroll
                           </a>
                         )}
                       </li>
@@ -90,11 +90,11 @@ export function ProgramClasses({ location, program, cards, otherHref }: { locati
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-orchid-tint px-6 py-5">
         <div>
           <p className="font-extrabold text-ink">Already a Gym Nest family?</p>
-          <p className="text-muted">Trials for families already in our system are booked by our front desk. Send us a request and we&rsquo;ll set it up.</p>
+          <p className="text-muted">Log in to your parent portal to add a class for another child or a new day.</p>
         </div>
-        <button type="button" onClick={() => setPicked({ className: `${program} trial (existing family)`, requestedTime: "", label: "", mode: "trial" })} className="min-h-11 shrink-0 rounded-full border-2 border-navy bg-white px-5 text-sm font-extrabold text-navy hover:bg-aqua-tint">
-          Request a trial
-        </button>
+        <a href={PARENT_PORTAL_URL} className="inline-flex min-h-11 shrink-0 items-center rounded-full border-2 border-navy bg-white px-5 text-sm font-extrabold text-navy hover:bg-aqua-tint">
+          Go to the parent portal
+        </a>
       </div>
       {picked && <TrialDialog location={location} picked={picked} onClose={() => setPicked(null)} />}
     </>
@@ -117,7 +117,7 @@ function TrialDialog({ location, picked, onClose }: { location: LocationKey; pic
     };
   }, [onClose]);
 
-  const heading = picked.mode === "waitlist" ? "Join the waitlist" : picked.mode === "evaluation" ? "Request an evaluation" : "Schedule a free trial";
+  const heading = picked.mode === "waitlist" ? "Join the waitlist" : picked.mode === "evaluation" ? "Request an evaluation" : "Request this class";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-navy-dark/60 p-0 sm:items-center sm:p-6" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PHONE, PHONE_HREF } from "../lib/site";
 
-export function Cta({ title = "Your child's first class is free.", text = "Find a class that fits your schedule and request a first class in under a minute.", href = "/classes", label = "Find a class" }: { title?: string; text?: string; href?: string; label?: string }) {
+export function Cta({ title = "Start with a no-risk first day.", text = "Find a class that fits your schedule and enroll in a few minutes. Not the right fit? Tell us within 24 hours of the first class and you won't be charged.", href = "/classes", label = "Find a class" }: { title?: string; text?: string; href?: string; label?: string }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-6 rounded-[2rem] bg-navy px-8 py-10 text-white sm:px-12">

@@ -50,7 +50,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
     return (
       <div className={`rounded-2xl p-6 ${dark ? "bg-white/10" : "bg-aqua-tint"}`} role="status">
         <p className={`font-display text-2xl font-semibold ${dark ? "" : "text-navy"}`}>
-          {req.mode === "waitlist" ? "You're on the waitlist!" : req.mode === "evaluation" ? "Evaluation requested!" : "Your free trial is requested!"}
+          {req.mode === "waitlist" ? "You're on the waitlist!" : req.mode === "evaluation" ? "Evaluation requested!" : "Request sent!"}
         </p>
         <p className={`mt-2 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
           {req.mode === "waitlist"
@@ -84,7 +84,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
         disabled={state === "sending"}
         className={`min-h-12 rounded-full font-extrabold disabled:opacity-60 sm:col-span-2 ${dark ? "bg-orchid text-navy-dark hover:brightness-105" : "bg-navy text-white hover:bg-navy-dark"}`}
       >
-        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Request a free trial"}
+        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Send request"}
       </button>
       {state === "error" && <p className={`text-sm font-bold sm:col-span-2 ${dark ? "text-orchid" : "text-full"}`}>Something went wrong. Please call us at 208-278-2011.</p>}
     </form>

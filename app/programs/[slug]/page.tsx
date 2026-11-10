@@ -31,12 +31,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!parsed) return {};
   const p = PROGRAMS[parsed.program];
   if (!parsed.loc) {
-    return pageMeta({ title: `${p.seoTitle} in Nampa & Eagle, ID`, description: `${p.tagline} Classes at The Gym Nest in Nampa and Eagle, Idaho. First class free.`, path: programPath(p.key) });
+    return pageMeta({ title: `${p.seoTitle} in Nampa & Eagle, ID`, description: `${p.tagline} Classes at The Gym Nest in Nampa and Eagle, Idaho. No-risk first day.`, path: programPath(p.key) });
   }
   const l = LOCATIONS[parsed.loc];
   return pageMeta({
     title: `${p.seoTitle} in ${l.name}, ID`,
-    description: `${p.tagline} At The Gym Nest ${l.name}, ${l.street}. Serving ${l.serves.slice(0, 4).join(", ")} and nearby. First class free. See live open spots.`,
+    description: `${p.tagline} At The Gym Nest ${l.name}, ${l.street}. Serving ${l.serves.slice(0, 4).join(", ")} and nearby. No-risk first day. See live open spots.`,
     path: programPath(p.key, parsed.loc),
   });
 }
@@ -72,7 +72,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
   const faqs = [
     ...p.faqs,
     { q: `Where is The Gym Nest ${l.name}?`, a: `${l.street}, ${l.city}, ID ${l.zip}. Families come from ${l.serves.join(", ")}.` },
-    { q: "How much are classes?", a: `Tuition is billed monthly and varies by class. Call ${PHONE} for current ${l.name} rates. New families pay a one-time $50 registration fee, and the first class is free.` },
+    { q: "How much are classes?", a: `Tuition is billed monthly and varies by class. Call ${PHONE} for current ${l.name} rates. New families pay a one-time $50 registration fee, and every new student starts with a no-risk first day.` },
   ];
 
   return (
@@ -94,7 +94,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
         </div>
         <ul className="grid gap-3 rounded-3xl bg-aqua-tint p-6 sm:p-7">
           {[
-            "Your first class is free",
+            "No-risk first day",
             "Month-to-month, no long contract",
             "Small classes with coaches who know every kid",
             `${l.street}, ${l.city}`,
@@ -108,11 +108,11 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="font-display text-3xl font-bold text-navy sm:text-4xl">{l.name} {p.title.toLowerCase()} classes</h2>
-            <p className="mt-2 max-w-2xl text-muted">Pick a day and time to schedule a free trial in our secure registration. When it asks about a trial, choose <strong className="text-ink">Yes</strong> and your first class is free. Open spots update throughout the day.</p>
+            <p className="mt-2 max-w-2xl text-muted">Pick a day and time to enroll in our secure registration. Your first day is no-risk: if it isn&rsquo;t the right fit, tell us within 24 hours of that class and you won&rsquo;t be charged. Open spots update throughout the day.</p>
           </div>
           <Link href={classesPath(loc, p.finder)} className="font-extrabold text-navy underline">Compare every class in the class finder →</Link>
         </div>
-        <ProgramClasses location={loc} program={p.title} cards={buildCards(p.classes, here)} otherHref={programPath(p.key, otherLocation(loc))} />
+        <ProgramClasses location={loc} cards={buildCards(p.classes, here)} otherHref={programPath(p.key, otherLocation(loc))} />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
@@ -126,7 +126,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <Faq faqs={faqs} />
-      <Cta title={`Try ${p.title.toLowerCase()} in ${l.name}, free.`} href="#classes" />
+      <Cta title={`Start ${p.title.toLowerCase()} in ${l.name} with a no-risk first day.`} href="#classes" label="See class times" />
     </>
   );
 }

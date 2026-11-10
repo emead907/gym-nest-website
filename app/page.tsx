@@ -15,7 +15,7 @@ export const revalidate = 600;
 export const metadata = {
   ...pageMeta({
     title: "The Gym Nest | Kids Gymnastics, Ninja & Cheer in Nampa and Eagle, ID",
-    description: "Kids gymnastics, ninja, tumbling and cheer classes, preschool, open play, camps and birthday parties at The Gym Nest in Nampa and Eagle, Idaho. Ages 18 months and up. First class free.",
+    description: "Kids gymnastics, ninja, tumbling and cheer classes, preschool, open play, camps and birthday parties at The Gym Nest in Nampa and Eagle, Idaho. Ages 18 months and up. No-risk first day.",
     path: "/",
   }),
   title: { absolute: "The Gym Nest | Kids Gymnastics, Ninja & Cheer in Nampa and Eagle, ID" },
@@ -39,7 +39,7 @@ const MORE = [
 
 const FAQS = [
   { q: "What ages does The Gym Nest teach?", a: "Kids 18 months and up. Toddlers start in Happy Hoppers with a parent, and classes go up through age 12, plus preschool for ages 3–5." },
-  { q: "Is the first class free?", a: "Yes. New students get their first class free. Pick a class in the class finder and request your free first class." },
+  { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
   { q: "Where are your gyms?", a: "The Gym Nest Nampa is at 849 S. Rising Sun Dr, Nampa, ID 83686. The Gym Nest Eagle is at 17 N Fisher Park Way, Eagle, ID 83616." },
   { q: "Do you have boys' classes?", a: "Yes. Every class is for boys and girls, and ninja classes are a favorite with lots of boys." },
 ];
@@ -57,7 +57,7 @@ export default async function Home() {
           <div>
             <p className="text-sm font-extrabold uppercase tracking-widest text-orchid-dark">Gymnastics · Ninja · Cheer · Preschool</p>
             <h1 className="mt-3 font-display text-5xl font-bold leading-[1.02] text-navy sm:text-7xl">Kids gymnastics in Nampa &amp; Eagle, Idaho</h1>
-            <p className="mt-6 max-w-xl text-xl leading-relaxed text-muted">Creating happiness through fitness, movement and positivity, for boys and girls 18 months and up. Your child&rsquo;s first class is free.</p>
+            <p className="mt-6 max-w-xl text-xl leading-relaxed text-muted">Creating happiness through fitness, movement and positivity, for boys and girls 18 months and up. Every new student starts with a no-risk first day.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/classes" className="inline-flex min-h-14 items-center rounded-full bg-navy px-8 text-lg font-extrabold text-white hover:bg-navy-dark">Find a class</Link>
               <Link href="/events/birthday-parties" className="inline-flex min-h-14 items-center rounded-full bg-orchid px-8 text-lg font-extrabold text-navy-dark hover:brightness-105">Book a birthday party</Link>
