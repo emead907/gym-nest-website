@@ -7,8 +7,8 @@ import { LOCATIONS } from "../../lib/site";
  * pages and the class finder. Each request goes two places at once:
  *
  *  1. The Hub: that gym's trial board (Nampa or Eagle).
- *  2. Zapier (ZAPIER_WEBHOOK_URL): emails the gym and adds the family,
- *     contact and student to Jackrabbit.
+ *  2. Zapier (ZAPIER_WEBHOOK_URL): emails the gym and notes whether the
+ *     family is already in Jackrabbit (it never creates accounts).
  *
  * The family is told it went through if either one worked, so a hiccup in one
  * never blocks a sign-up. Failures are logged in Vercel.

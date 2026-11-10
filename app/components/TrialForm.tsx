@@ -19,7 +19,7 @@ export interface TrialRequest {
 
 /**
  * Waitlist, evaluation and existing-family trial requests. Goes to the Hub,
- * emails the gym and adds new families to Jackrabbit (see /api/trial).
+ * emails the gym (see /api/trial). Families register in Jackrabbit themselves.
  * New-family trials skip this and use Jackrabbit's own trial registration.
  */
 export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "light" | "dark" }) {
