@@ -108,11 +108,11 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="font-display text-3xl font-bold text-navy sm:text-4xl">{l.name} {p.title.toLowerCase()} classes</h2>
-            <p className="mt-2 text-muted">Pick a day and time to schedule a free trial. Open spots update throughout the day.</p>
+            <p className="mt-2 max-w-2xl text-muted">Pick a day and time to schedule a free trial in our secure registration. When it asks about a trial, choose <strong className="text-ink">Yes</strong> and your first class is free. Open spots update throughout the day.</p>
           </div>
           <Link href={classesPath(loc, p.finder)} className="font-extrabold text-navy underline">Compare every class in the class finder →</Link>
         </div>
-        <ProgramClasses location={loc} cards={buildCards(p.classes, here)} otherHref={programPath(p.key, otherLocation(loc))} />
+        <ProgramClasses location={loc} program={p.title} cards={buildCards(p.classes, here)} otherHref={programPath(p.key, otherLocation(loc))} />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
@@ -177,9 +177,9 @@ function toSlots(list: SiteClass[]): Slot[] {
       continue;
     }
     const plural = c.days.length === 1 ? `${day}s` : day;
-    byTime.set(key, { id: c.id, day, time, when: `${plural} · ${time}`, openings: c.openings, sort: DAY_ORDER.indexOf(c.days[0]) * 1440 + mins(c.start) });
+    byTime.set(key, { id: c.id, day, time, when: `${plural} · ${time}`, openings: c.openings, regLink: c.regLink, sort: DAY_ORDER.indexOf(c.days[0]) * 1440 + mins(c.start) });
   }
-  return [...byTime.values()].sort((a, b) => a.sort - b.sort).map((s) => ({ id: s.id, day: s.day, time: s.time, when: s.when, openings: s.openings }));
+  return [...byTime.values()].sort((a, b) => a.sort - b.sort).map((s) => ({ id: s.id, day: s.day, time: s.time, when: s.when, openings: s.openings, regLink: s.regLink }));
 }
 
 function buildCards(catalog: { name: string; ages: string; length: string; about: string; invite?: boolean }[], live: SiteClass[]): ProgramCard[] {

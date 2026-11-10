@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { LOCATIONS, WAIVER_URL, type LocationKey } from "../lib/site";
+import { useState } from "react";
+import { LOCATIONS, type LocationKey } from "../lib/site";
 
 export type TrialMode = "trial" | "waitlist" | "evaluation";
 
@@ -15,29 +15,16 @@ export interface TrialRequest {
   source: "program-page" | "class-finder";
 }
 
-const SECONDS = 4;
-
 /**
- * Free trial / waitlist / evaluation request. Sends the family to the Hub,
- * emails the gym and adds them to Jackrabbit (see /api/trial), then sends
- * the parent to Jackrabbit to sign waivers.
+ * Waitlist, evaluation and existing-family trial requests. Goes to the Hub,
+ * emails the gym and adds new families to Jackrabbit (see /api/trial).
+ * New-family trials skip this and use Jackrabbit's own trial registration.
  */
 export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "light" | "dark" }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const [left, setLeft] = useState(SECONDS);
   const dark = tone === "dark";
   const field = `min-h-12 w-full rounded-xl px-4 text-ink ${dark ? "border-0 bg-white" : "border-2 border-line bg-white focus:border-navy"}`;
   const label = `flex flex-col gap-1.5 text-sm font-bold ${dark ? "" : "text-ink"}`;
-
-  useEffect(() => {
-    if (state !== "sent") return;
-    if (left <= 0) {
-      window.location.href = WAIVER_URL;
-      return;
-    }
-    const t = setTimeout(() => setLeft((n) => n - 1), 1000);
-    return () => clearTimeout(t);
-  }, [state, left]);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -68,14 +55,8 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
         <p className={`mt-2 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
           {req.mode === "waitlist"
             ? `We'll reach out as soon as a spot opens in ${req.className}.`
-            : `Our ${gym} front desk will reach out within one business day to confirm ${req.className}.`}
+            : `Our ${gym} front desk will reach out within one business day to set it up.`}
         </p>
-        <p className={`mt-4 font-bold ${dark ? "" : "text-ink"}`}>
-          Next step: sign your waivers in our parent portal. Click <strong>Create Login</strong> and use the same email you just entered.
-        </p>
-        <a href={WAIVER_URL} className={`mt-4 inline-flex min-h-12 items-center rounded-full px-7 font-extrabold ${dark ? "bg-orchid text-navy-dark" : "bg-navy text-white hover:bg-navy-dark"}`}>
-          Sign waivers now{left > 0 ? ` (${left})` : ""}
-        </a>
       </div>
     );
   }
@@ -103,11 +84,8 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
         disabled={state === "sending"}
         className={`min-h-12 rounded-full font-extrabold disabled:opacity-60 sm:col-span-2 ${dark ? "bg-orchid text-navy-dark hover:brightness-105" : "bg-navy text-white hover:bg-navy-dark"}`}
       >
-        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Schedule my free trial"}
+        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Request a free trial"}
       </button>
-      <p className={`text-xs sm:col-span-2 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
-        After you submit, we&rsquo;ll take you to our parent portal to sign waivers.
-      </p>
       {state === "error" && <p className={`text-sm font-bold sm:col-span-2 ${dark ? "text-orchid" : "text-full"}`}>Something went wrong. Please call us at 208-278-2011.</p>}
     </form>
   );

@@ -155,7 +155,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
           </button>
         )}
       </div>
-      <p className="mt-1 text-sm text-muted">{live ? "Open spots update live from our schedule." : "Open spots are updated throughout the day."}</p>
+      <p className="mt-1 text-sm text-muted">Trying a class? Choose <strong className="text-ink">Yes</strong> for trial on the registration form and your first class is free. {live ? "Open spots update live from our schedule." : "Open spots are updated throughout the day."}</p>
 
       {results.length === 0 && (
         <div className="mt-6 rounded-3xl bg-orchid-tint p-8 text-center">
@@ -233,9 +233,11 @@ function FinderCard({ c, isOpen, full, onTrial, onRegister, children }: { c: Sit
         <p className="mt-1.5 flex items-center gap-2 text-muted"><UserRound aria-hidden className="h-4 w-4" />{c.coach ? `Coach ${c.coach}` : "Coach to be announced"}</p>
         <Spots c={c} />
         <div className="mt-5 flex gap-3">
-          <button type="button" onClick={onTrial} className="min-h-12 flex-1 rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">
-            {full ? "Join waitlist" : "Try a class"}
-          </button>
+          {full ? (
+            <button type="button" onClick={onTrial} className="min-h-12 flex-1 rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Join waitlist</button>
+          ) : (
+            <a href={c.regLink} className="flex min-h-12 flex-1 items-center justify-center rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Try a class</a>
+          )}
           {!full && (
             <button type="button" onClick={onRegister} className="min-h-12 flex-1 rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Register</button>
           )}

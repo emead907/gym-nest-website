@@ -91,7 +91,7 @@ function toSiteClass(c: { id: string; name: string; category: string; location: 
     id: c.id, name, location: loc, program: programOf(name, c.category),
     days: c.days, start: c.start, end: c.end, ages: cat.ages, bands: cat.bands, parentAndMe: !!cat.parentAndMe,
     coach: c.coach.replace(/\s+/g, " ").trim(),
-    openings: c.openings == null ? null : Math.max(0, c.openings), max: c.max, regLink: c.regLink || REG_FALLBACK,
+    openings: c.openings == null ? null : Math.max(0, c.openings), max: c.max, regLink: c.regLink || (c.id ? `${REG_FALLBACK}&preLoadClassID=${c.id}` : REG_FALLBACK),
   };
 }
 

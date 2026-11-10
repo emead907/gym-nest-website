@@ -6,7 +6,7 @@ import { CalendarDays, Clock, MapPin, X } from "lucide-react";
 import { LOCATIONS, type LocationKey } from "../lib/site";
 import { TrialForm, type TrialMode } from "./TrialForm";
 
-export interface Slot { id: string; day: string; time: string; when: string; openings: number | null }
+export interface Slot { id: string; day: string; time: string; when: string; openings: number | null; regLink: string }
 export interface ProgramCard { name: string; ages: string; length: string; about: string; invite: boolean; slots: Slot[] }
 
 type Picked = { className: string; classId?: string; requestedTime: string; label: string; mode: TrialMode };
@@ -17,7 +17,7 @@ const ACCENTS = [
 ];
 
 /** Gym Stars–style class list: one card per class, every time listed under it, each with its own button. */
-export function ProgramClasses({ location, cards, otherHref }: { location: LocationKey; cards: ProgramCard[]; otherHref: string }) {
+export function ProgramClasses({ location, program, cards, otherHref }: { location: LocationKey; program: string; cards: ProgramCard[]; otherHref: string }) {
   const [picked, setPicked] = useState<Picked | null>(null);
   const gym = LOCATIONS[location];
   const other = LOCATIONS[location === "nampa" ? "eagle" : "nampa"];
@@ -65,13 +65,19 @@ export function ProgramClasses({ location, cards, otherHref }: { location: Locat
                             </p>
                           )}
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => setPicked({ className: c.name, classId: s.id, requestedTime: s.when, label: `${s.day} · ${s.time}`, mode: full ? "waitlist" : "trial" })}
-                          className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-extrabold ${full ? "border-2 border-full/40 bg-white text-full hover:bg-[#fff4ee]" : "bg-navy text-white hover:bg-navy-dark"}`}
-                        >
-                          {full ? "Join waitlist" : "Schedule trial"}
-                        </button>
+                        {full ? (
+                          <button
+                            type="button"
+                            onClick={() => setPicked({ className: c.name, classId: s.id, requestedTime: s.when, label: `${s.day} · ${s.time}`, mode: "waitlist" })}
+                            className="min-h-11 shrink-0 rounded-full border-2 border-full/40 bg-white px-4 text-sm font-extrabold text-full hover:bg-[#fff4ee]"
+                          >
+                            Join waitlist
+                          </button>
+                        ) : (
+                          <a href={s.regLink} className="inline-flex min-h-11 shrink-0 items-center rounded-full bg-navy px-4 text-sm font-extrabold text-white hover:bg-navy-dark">
+                            Schedule trial
+                          </a>
+                        )}
                       </li>
                     );
                   })}
@@ -80,6 +86,15 @@ export function ProgramClasses({ location, cards, otherHref }: { location: Locat
             </article>
           );
         })}
+      </div>
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-orchid-tint px-6 py-5">
+        <div>
+          <p className="font-extrabold text-ink">Already a Gym Nest family?</p>
+          <p className="text-muted">Trials for families already in our system are booked by our front desk. Send us a request and we&rsquo;ll set it up.</p>
+        </div>
+        <button type="button" onClick={() => setPicked({ className: `${program} trial (existing family)`, requestedTime: "", label: "", mode: "trial" })} className="min-h-11 shrink-0 rounded-full border-2 border-navy bg-white px-5 text-sm font-extrabold text-navy hover:bg-aqua-tint">
+          Request a trial
+        </button>
       </div>
       {picked && <TrialDialog location={location} picked={picked} onClose={() => setPicked(null)} />}
     </>
@@ -112,7 +127,7 @@ function TrialDialog({ location, picked, onClose }: { location: LocationKey; pic
             <p className="text-sm font-extrabold uppercase tracking-widest text-orchid-dark">{heading}</p>
             <h2 id="trial-title" className="mt-1 font-display text-3xl font-bold text-navy">{picked.className}</h2>
             <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-muted">
-              {picked.mode !== "evaluation" && <span className="flex items-center gap-1.5"><CalendarDays aria-hidden className="h-4 w-4" />{picked.label}</span>}
+              {picked.label && <span className="flex items-center gap-1.5"><CalendarDays aria-hidden className="h-4 w-4" />{picked.label}</span>}
               <span className="flex items-center gap-1.5"><MapPin aria-hidden className="h-4 w-4" />The Gym Nest {gym.name}</span>
             </p>
           </div>
