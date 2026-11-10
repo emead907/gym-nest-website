@@ -9,6 +9,8 @@ export const PHONE = "208-278-2011";
 export const PHONE_HREF = "tel:+12082782011";
 export const JACKRABBIT_ORG_ID = "537979";
 export const PARENT_PORTAL_URL = `https://app.jackrabbitclass.com/jr3.0/ParentPortal/Login?orgId=${JACKRABBIT_ORG_ID}`;
+/** Where families go right after requesting a trial, to sign waivers in Jackrabbit. */
+export const WAIVER_URL = PARENT_PORTAL_URL;
 export const SOCIAL = {
   instagram: "https://www.instagram.com/thegymnestactivitycenter/",
   facebook: "https://www.facebook.com/thegymneststudio/",

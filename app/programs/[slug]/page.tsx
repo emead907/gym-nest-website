@@ -8,8 +8,8 @@ import { Cta } from "../../components/Cta";
 import { JsonLd } from "../../components/JsonLd";
 import { LocationCards } from "../../components/LocationCards";
 import { SetLocation } from "../../components/LocationProvider";
-import { Schedule } from "../../components/Schedule";
-import { getClasses } from "../../lib/classes";
+import { ProgramClasses, type ProgramCard, type Slot } from "../../components/ProgramClasses";
+import { getClasses, type SiteClass } from "../../lib/classes";
 import { LOCATIONS, LOCATION_KEYS, PHONE, POLICIES, PROGRAMS, PROGRAM_KEYS, classesPath, otherLocation, programPath, type LocationKey, type ProgramKey } from "../../lib/site";
 import { breadcrumbSchema, faqSchema, graph, pageMeta, serviceSchema } from "../../lib/seo";
 
@@ -81,20 +81,38 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
       <JsonLd data={graph(breadcrumbSchema(crumbs), faqSchema(faqs), serviceSchema({ name: `${p.seoTitle} in ${l.name}, ID`, description: p.intro, path, loc }))} />
       <PageHero eyebrow={`The Gym Nest ${l.name}`} title={`${p.seoTitle} in ${l.name}, Idaho`} intro={p.tagline} crumbs={crumbs}>
         <div className="flex flex-wrap gap-3">
-          <Link href={classesPath(loc, p.finder)} className="inline-flex min-h-12 items-center rounded-full bg-navy px-7 font-extrabold text-white hover:bg-navy-dark">See open spots in {l.name}</Link>
+          <a href="#classes" className="inline-flex min-h-12 items-center rounded-full bg-navy px-7 font-extrabold text-white hover:bg-navy-dark">See {l.name} class times</a>
           <Link href={programPath(p.key, otherLocation(loc))} className="inline-flex min-h-12 items-center rounded-full border-2 border-navy px-7 font-extrabold text-navy hover:bg-white">Switch to {LOCATIONS[otherLocation(loc)].name}</Link>
         </div>
       </PageHero>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <p className="max-w-3xl text-lg leading-relaxed text-ink">{p.intro}</p>
+      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr] md:items-center">
+        <div>
+          <p className="text-sm font-extrabold uppercase tracking-widest text-orchid-dark">About the program</p>
+          <h2 className="mt-2 font-display text-3xl font-bold text-navy sm:text-4xl">{p.title} at The Gym Nest {l.name}</h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink">{p.intro}</p>
+        </div>
+        <ul className="grid gap-3 rounded-3xl bg-aqua-tint p-6 sm:p-7">
+          {[
+            "Your first class is free",
+            "Month-to-month, no long contract",
+            "Small classes with coaches who know every kid",
+            `${l.street}, ${l.city}`,
+          ].map((t) => (
+            <li key={t} className="flex gap-3 font-bold text-ink"><Check aria-hidden className="mt-1 h-4 w-4 shrink-0 text-orchid-dark" />{t}</li>
+          ))}
+        </ul>
       </section>
-      <ClassList program={p.key} />
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <h2 className="font-display text-3xl font-bold text-navy">{l.name} {p.title.toLowerCase()} schedule</h2>
-        <p className="mt-2 text-muted">Current classes at {l.street}, {l.city}.</p>
-        <div className="mt-6"><Schedule classes={here} location={loc} program={p.finder} /></div>
+      <section id="classes" className="mx-auto max-w-7xl scroll-mt-24 px-4 pb-14 sm:px-6">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="font-display text-3xl font-bold text-navy sm:text-4xl">{l.name} {p.title.toLowerCase()} classes</h2>
+            <p className="mt-2 text-muted">Pick a day and time to schedule a free trial. Open spots update throughout the day.</p>
+          </div>
+          <Link href={classesPath(loc, p.finder)} className="font-extrabold text-navy underline">Compare every class in the class finder →</Link>
+        </div>
+        <ProgramClasses location={loc} cards={buildCards(p.classes, here)} otherHref={programPath(p.key, otherLocation(loc))} />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
@@ -108,7 +126,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <Faq faqs={faqs} />
-      <Cta title={`Try ${p.title.toLowerCase()} in ${l.name}, free.`} href={classesPath(loc, p.finder)} />
+      <Cta title={`Try ${p.title.toLowerCase()} in ${l.name}, free.`} href="#classes" />
     </>
   );
 }
@@ -132,4 +150,52 @@ function ClassList({ program }: { program: ProgramKey }) {
       </div>
     </section>
   );
+}
+
+// ─── Live Jackrabbit times grouped under each class ─────────────────────────
+
+const DAY_NAMES: Record<string, string> = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday" };
+const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const norm = (n: string) => n.toLowerCase().replace(/[^a-z ]/g, "").replace(/s\b/g, "").replace(/\s+/g, " ").trim();
+const mins = (t: string) => {
+  const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  return m ? ((Number(m[1]) % 12) + (m[3].toUpperCase() === "PM" ? 12 : 0)) * 60 + Number(m[2]) : 0;
+};
+/** "4:30 PM", "5:15 PM" → "4:30–5:15 PM" */
+const span = (a: string, b: string) => (a.slice(-2) === b.slice(-2) ? `${a.slice(0, -3)}–${b}` : `${a}–${b}`);
+
+function toSlots(list: SiteClass[]): Slot[] {
+  const byTime = new Map<string, Slot & { sort: number }>();
+  for (const c of list) {
+    const day = c.days.length === 1 ? DAY_NAMES[c.days[0]] ?? c.days[0] : c.days.join(" & ");
+    const time = span(c.start, c.end);
+    const key = `${day}|${time}`;
+    const prev = byTime.get(key);
+    if (prev) {
+      // two sections at the same time: show once, add their open spots together
+      prev.openings = prev.openings == null || c.openings == null ? prev.openings ?? c.openings : prev.openings + c.openings;
+      continue;
+    }
+    const plural = c.days.length === 1 ? `${day}s` : day;
+    byTime.set(key, { id: c.id, day, time, when: `${plural} · ${time}`, openings: c.openings, sort: DAY_ORDER.indexOf(c.days[0]) * 1440 + mins(c.start) });
+  }
+  return [...byTime.values()].sort((a, b) => a.sort - b.sort).map((s) => ({ id: s.id, day: s.day, time: s.time, when: s.when, openings: s.openings }));
+}
+
+function buildCards(catalog: { name: string; ages: string; length: string; about: string; invite?: boolean }[], live: SiteClass[]): ProgramCard[] {
+  const used = new Set<string>();
+  const cards: ProgramCard[] = catalog.map((c) => {
+    const mine = live.filter((x) => norm(x.name) === norm(c.name));
+    mine.forEach((x) => used.add(x.id));
+    return { name: c.name, ages: c.ages, length: c.length, about: c.about, invite: !!c.invite, slots: c.invite ? [] : toSlots(mine) };
+  });
+  // Jackrabbit classes we don't describe yet still get a card, so no time is ever hidden.
+  const extra = new Map<string, SiteClass[]>();
+  for (const x of live) if (!used.has(x.id)) extra.set(x.name, [...(extra.get(x.name) ?? []), x]);
+  for (const [name, list] of extra) {
+    const m = mins(list[0].end) - mins(list[0].start);
+    cards.push({ name, ages: list[0].ages, length: m > 0 ? `${m} min` : "", about: "", invite: false, slots: toSlots(list) });
+  }
+  // Classes with times first, invite-only last
+  return cards.sort((a, b) => Number(a.invite) - Number(b.invite));
 }

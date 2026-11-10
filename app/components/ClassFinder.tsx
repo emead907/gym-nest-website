@@ -185,7 +185,9 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
                     <button type="button" onClick={() => setOpen(null)} aria-label="Close" className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/30 hover:bg-white/10"><X aria-hidden className="h-5 w-5" /></button>
                   </div>
                   {open.mode === "trial" ? (
-                    <TrialForm c={c} full={full} when={when(c)} />
+                    <div className="mt-6 max-w-3xl">
+                      <TrialForm tone="dark" req={{ location: c.location, classId: c.id, className: c.name, requestedTime: when(c), mode: full ? "waitlist" : "trial", source: "class-finder" }} />
+                    </div>
                   ) : (
                     <div className="mt-6 max-w-2xl rounded-2xl bg-white/10 p-6">
                       <p className="font-display text-2xl font-semibold">Almost done!</p>
