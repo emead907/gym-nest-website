@@ -4,7 +4,6 @@ import { Decor } from "./components/PageHero";
 import { Faq } from "./components/Faq";
 import { Cta } from "./components/Cta";
 import { JsonLd } from "./components/JsonLd";
-import { getClasses } from "./lib/classes";
 import { GYM, PHONE, PHONE_HREF, PROGRAMS, PROGRAM_KEYS, programPath } from "./lib/site";
 import { faqSchema, graph, pageMeta } from "./lib/seo";
 
@@ -43,6 +42,14 @@ const WHY = [
   { icon: HeartHandshake, title: "Happy, confident kids", text: "Creating happiness through fitness, movement and positivity." },
 ];
 
+/** Hero age buttons → the class finder filtered to that age. Keys match the finder's age filters. */
+const AGE_PICKS = [
+  { age: "tot", label: "18–36 mo", note: "Parent & me" },
+  { age: "3", label: "3 years", note: "Tiny Tumblers, Mini Ninjas" },
+  { age: "45", label: "4–5 years", note: "Gymnastics & ninja" },
+  { age: "612", label: "6–12 years", note: "Gym, ninja, tumbling, cheer" },
+];
+
 const FAQS = [
   { q: "What ages does The Gym Nest teach?", a: "Kids 18 months and up. Toddlers start in Happy Hoppers with a parent, and classes go up through age 12, plus preschool for ages 3–5." },
   { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
@@ -52,11 +59,6 @@ const FAQS = [
 ];
 
 export default async function Home() {
-  const { classes } = await getClasses();
-  const openSpots = classes.reduce((n, c) => n + (c.openings ?? 0), 0);
-  const prices = classes.map((c) => c.tuition).filter((t): t is number => t != null);
-  const from = prices.length ? Math.min(...prices) : null;
-
   return (
     <>
       <JsonLd data={graph(faqSchema(FAQS))} />
@@ -73,20 +75,20 @@ export default async function Home() {
             </div>
           </div>
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
-            <p className="flex items-center gap-2 font-extrabold text-navy"><MapPin aria-hidden className="h-5 w-5" />The Gym Nest Nampa</p>
-            <p className="mt-1 text-muted">{GYM.street}, {GYM.city}</p>
+            <p className="font-display text-3xl font-bold text-navy">How old is your child?</p>
+            <p className="mt-1 text-muted">We&rsquo;ll show the classes that fit.</p>
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-aqua-tint p-4">
-                <p className="font-display text-4xl font-bold text-navy">{openSpots}</p>
-                <p className="text-sm font-bold text-muted">open class spots right now</p>
-              </div>
-              <div className="rounded-2xl bg-orchid-tint p-4">
-                <p className="font-display text-4xl font-bold text-navy">{from != null ? `$${from}` : classes.length}</p>
-                <p className="text-sm font-bold text-muted">{from != null ? "a month for classes, to start" : "weekly classes"}</p>
-              </div>
+              {AGE_PICKS.map((a, i) => (
+                <Link key={a.age} href={`/classes?age=${a.age}`} className={`group rounded-2xl p-4 transition hover:-translate-y-0.5 hover:shadow-md ${i % 3 === 0 ? "bg-aqua-tint" : "bg-orchid-tint"}`}>
+                  <span className="block font-display text-2xl font-bold text-navy">{a.label}</span>
+                  <span className="mt-0.5 block text-sm font-bold text-muted">{a.note}</span>
+                </Link>
+              ))}
             </div>
-            <Link href="/classes" className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">See live open spots →</Link>
-            <a href={PHONE_HREF} className="mt-3 flex items-center justify-center gap-2 text-sm font-extrabold text-muted hover:text-navy"><Phone aria-hidden className="h-4 w-4" />Questions? Call {PHONE}</a>
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm font-extrabold text-muted">
+              <a href={GYM.mapsUrl} className="flex items-center gap-1.5 hover:text-navy"><MapPin aria-hidden className="h-4 w-4" />{GYM.street}</a>
+              <a href={PHONE_HREF} className="flex items-center gap-1.5 hover:text-navy"><Phone aria-hidden className="h-4 w-4" />{PHONE}</a>
+            </div>
           </div>
         </div>
       </section>

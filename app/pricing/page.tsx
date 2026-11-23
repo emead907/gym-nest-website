@@ -4,7 +4,7 @@ import { PageHero } from "../components/PageHero";
 import { Cta } from "../components/Cta";
 import { JsonLd } from "../components/JsonLd";
 import { getClasses, getPasses, type SiteClass } from "../lib/classes";
-import { CAMP, KNO, OPEN_PLAY, PARTY, POLICIES, PRESCHOOL, PROGRAMS, PROGRAM_KEYS, REGISTRATION_FEE, programPath } from "../lib/site";
+import { CAMP, COMMITMENT, KNO, OPEN_PLAY, commitmentPrice, PARTY, POLICIES, PRESCHOOL, PROGRAMS, PROGRAM_KEYS, REGISTRATION_FEE, programPath } from "../lib/site";
 import { breadcrumbSchema, graph, pageMeta } from "../lib/seo";
 
 export const revalidate = 600;
@@ -26,7 +26,8 @@ function tuitionRows(classes: SiteClass[]) {
   }
   return [...by.values()].map((r) => {
     const p = [...r.prices].sort((a, b) => a - b);
-    return { ...r, price: p.length === 1 ? `$${p[0]}` : `$${p[0]}–$${p[p.length - 1]}`, low: p[0] };
+    const committed = [...new Set(p.map(commitmentPrice).filter((x): x is number => x != null))];
+    return { ...r, price: p.length === 1 ? `$${p[0]}` : `$${p[0]}–$${p[p.length - 1]}`, low: p[0], committed: committed.length === 1 ? committed[0] : null };
   });
 }
 
@@ -62,6 +63,9 @@ export default async function Pricing() {
 
         <h2 className="mt-14 font-display text-3xl font-bold text-navy">Class tuition</h2>
         <p className="mt-1 text-muted">Per child, per month, for one class a week.{!live && " Prices are from our most recent schedule."}</p>
+        <p className="mt-4 rounded-2xl bg-orchid-tint px-5 py-4 font-bold text-ink">
+          Save with a {COMMITMENT.months}-month commitment: {Object.entries(COMMITMENT.prices).map(([from, to]) => `$${from} one-hour classes are $${to}/month`).join(", ")}.
+        </p>
         <div className="mt-6 space-y-6">
           {groups.map((g) => (
             <div key={g.finder} className="overflow-hidden rounded-3xl border border-line">
@@ -73,7 +77,10 @@ export default async function Pricing() {
                 {g.rows.map((r) => (
                   <li key={r.name} className="flex items-center justify-between gap-4 px-6 py-3">
                     <span><span className="font-extrabold text-ink">{r.name}</span> <span className="text-sm text-muted">· {r.ages}</span></span>
-                    <span className="shrink-0 font-display text-xl font-semibold text-navy">{r.price}<span className="text-sm font-bold text-muted">/mo</span></span>
+                    <span className="shrink-0 text-right">
+                      <span className="font-display text-xl font-semibold text-navy">{r.price}<span className="text-sm font-bold text-muted">/mo</span></span>
+                      {r.committed != null && <span className="block text-xs font-extrabold text-orchid-dark">${r.committed}/mo with {COMMITMENT.months}-month commitment</span>}
+                    </span>
                   </li>
                 ))}
               </ul>

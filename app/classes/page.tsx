@@ -10,7 +10,7 @@ export const revalidate = 600;
 
 export const metadata = pageMeta({
   title: "Find a Class: Kids Gymnastics, Ninja & Cheer Schedule in Nampa",
-  description: "See every kids gymnastics, ninja, tumbling and cheer class at The Gym Nest in Nampa, Idaho, with live open spots and monthly tuition. Filter by age and day, then enroll with a no-risk first day.",
+  description: "See every kids gymnastics, ninja, tumbling and cheer class at The Gym Nest in Nampa, Idaho, with live times and monthly tuition. Filter by age and day, then enroll with a no-risk first day.",
   path: "/classes",
 });
 
@@ -31,7 +31,7 @@ export default async function ClassesPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbSchema(crumbs), { "@type": "ItemList", name: "Kids classes at The Gym Nest Nampa", itemListElement: courses.map((item, i) => ({ "@type": "ListItem", position: i + 1, item })) })} />
-      <PageHero eyebrow="Class finder" title="What works for your family?" intro="Pick your child's age and the days that work. You'll see real open spots and monthly prices, and can request or enroll right here with a no-risk first day." crumbs={crumbs} />
+      <PageHero eyebrow="Class finder" title="What works for your family?" intro="Pick your child's age and the days that work. You'll see real class times and monthly prices, and can request or enroll right here with a no-risk first day." crumbs={crumbs} />
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         <Suspense fallback={<p className="text-muted">Loading classes…</p>}>
           <ClassFinder classes={classes} live={live} />

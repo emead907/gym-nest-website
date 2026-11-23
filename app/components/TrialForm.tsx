@@ -51,7 +51,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
     return (
       <div className={`rounded-2xl p-6 ${dark ? "bg-white/10" : "bg-aqua-tint"}`} role="status">
         <p className={`font-display text-2xl font-semibold ${dark ? "" : "text-navy"}`}>
-          {req.mode === "waitlist" ? "You're on the waitlist!" : req.mode === "evaluation" ? "Evaluation requested!" : `Thanks for requesting ${req.className}!`}
+          {req.mode === "waitlist" ? "You're on the waitlist!" : req.mode === "evaluation" ? "Evaluation requested!" : `Thanks! We got your request for ${req.className}.`}
         </p>
         {req.mode === "trial" && req.regLink ? (
           <>
@@ -94,7 +94,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
         disabled={state === "sending"}
         className={`min-h-12 rounded-full font-extrabold disabled:opacity-60 sm:col-span-2 ${dark ? "bg-orchid text-navy-dark hover:brightness-105" : "bg-navy text-white hover:bg-navy-dark"}`}
       >
-        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Request this class"}
+        {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Send my request"}
       </button>
       {state === "error" && <p className={`text-sm font-bold sm:col-span-2 ${dark ? "text-orchid" : "text-full"}`}>Something went wrong. Please call us at {PHONE}.</p>}
     </form>

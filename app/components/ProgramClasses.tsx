@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { CalendarDays, Clock, X } from "lucide-react";
-import { PARENT_PORTAL_URL, PHONE, PHONE_HREF } from "../lib/site";
+import { COMMITMENT, PARENT_PORTAL_URL, PHONE, PHONE_HREF, commitmentPrice } from "../lib/site";
 import { TrialForm, type TrialMode } from "./TrialForm";
 
 export interface Slot { id: string; day: string; time: string; when: string; openings: number | null; tuition: number | null; regLink: string }
@@ -32,6 +32,7 @@ export function ProgramClasses({ cards }: { cards: ProgramCard[] }) {
         {cards.map((c, i) => {
           const a = ACCENTS[i % ACCENTS.length];
           const price = priceLabel(c.slots);
+          const committed = [...new Set(c.slots.map((s) => commitmentPrice(s.tuition)).filter((p): p is number => p != null))];
           return (
             <article key={c.name} className="relative overflow-hidden rounded-3xl border border-line bg-white p-6 sm:p-8">
               <span aria-hidden className={`absolute inset-y-0 left-0 w-1.5 ${a.bar}`} />
@@ -40,6 +41,7 @@ export function ProgramClasses({ cards }: { cards: ProgramCard[] }) {
                 <span className={`rounded-full px-3 py-1 text-xs font-extrabold ${a.pill}`}>{c.ages}</span>
                 {c.length && <span className="flex items-center gap-1 rounded-full bg-[#f1f2f8] px-3 py-1 text-xs font-extrabold text-muted"><Clock aria-hidden className="h-3 w-3" />{c.length}</span>}
                 {price && <span className="rounded-full bg-[#f1f2f8] px-3 py-1 text-xs font-extrabold text-navy">{price}</span>}
+                {committed.length === 1 && <span className="rounded-full bg-lime/40 px-3 py-1 text-xs font-extrabold text-navy">${committed[0]}/month with a {COMMITMENT.months}-month commitment</span>}
                 {c.invite && <span className="rounded-full bg-navy px-3 py-1 text-xs font-extrabold text-white">Invite / evaluation</span>}
               </div>
               {c.about && <p className="mt-3 max-w-2xl leading-relaxed text-ink">{c.about}</p>}
@@ -65,9 +67,9 @@ export function ProgramClasses({ cards }: { cards: ProgramCard[] }) {
                         <div>
                           <p className="font-extrabold text-navy">{s.day}</p>
                           <p className="text-muted">{s.time}</p>
-                          {s.openings != null && (
-                            <p className={`mt-0.5 text-xs font-extrabold ${full ? "text-full" : few ? "text-amber" : "text-navy/70"}`}>
-                              {full ? "Full – waitlist open" : s.openings === 1 ? "Only 1 spot left" : `${s.openings} spots open`}
+                          {(full || few) && (
+                            <p className={`mt-0.5 text-xs font-extrabold ${full ? "text-full" : "text-amber"}`}>
+                              {full ? "Full – waitlist open" : s.openings === 1 ? "Only 1 spot left!" : "Only 2 spots left!"}
                             </p>
                           )}
                         </div>
@@ -76,7 +78,7 @@ export function ProgramClasses({ cards }: { cards: ProgramCard[] }) {
                           onClick={() => setPicked({ className: c.name, classId: s.id, requestedTime: s.when, label: `${s.day} · ${s.time}`, mode: full ? "waitlist" : "trial", regLink: s.regLink })}
                           className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-extrabold ${full ? "border-2 border-full/40 bg-white text-full hover:bg-[#fff4ee]" : "bg-navy text-white hover:bg-navy-dark"}`}
                         >
-                          {full ? "Join waitlist" : "Request this class"}
+                          {full ? "Join waitlist" : "Request info"}
                         </button>
                       </li>
                     );
@@ -116,7 +118,7 @@ function TrialDialog({ picked, onClose }: { picked: Picked; onClose: () => void 
     };
   }, [onClose]);
 
-  const heading = picked.mode === "waitlist" ? "Join the waitlist" : picked.mode === "evaluation" ? "Request an evaluation" : "Request this class";
+  const heading = picked.mode === "waitlist" ? "Join the waitlist" : picked.mode === "evaluation" ? "Request an evaluation" : "Request info on this class";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-navy-dark/60 p-0 sm:items-center sm:p-6" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>

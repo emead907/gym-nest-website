@@ -35,10 +35,20 @@ export const GYM = {
 
 export const REGISTRATION_FEE = "$50";
 
+/**
+ * Commitment pricing: sign up for 6 months and pay less each month.
+ * Keyed by the regular monthly price from Jackrabbit → the committed price.
+ * $106 is the one-hour class price.
+ */
+export const COMMITMENT = { months: 6, prices: { 106: 90 } as Record<number, number> };
+/** The 6-month commitment price for a class, or null if there isn't one. */
+export const commitmentPrice = (tuition: number | null) => (tuition != null ? COMMITMENT.prices[tuition] ?? null : null);
+
 export const POLICIES = [
   "Every new student starts with a no-risk first day. Not the right fit? Tell us within 24 hours of the first class and you won't be charged.",
   `A one-time ${REGISTRATION_FEE} registration fee for new families.`,
   "Month-to-month memberships. Tuition bills on the 1st.",
+  "Save with a 6-month commitment: one-hour classes drop from $106 to $90 a month.",
   "To cancel, give written notice by the 15th to stop the next month's charge.",
   "Missed a class? Schedule a make-up within 30 days.",
 ];

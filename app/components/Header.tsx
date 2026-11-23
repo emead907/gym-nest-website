@@ -12,7 +12,7 @@ const NAV: Item[] = [
   {
     label: "Classes",
     children: [
-      { label: "Find a class", href: "/classes", note: "Live times and open spots" },
+      { label: "Find a class", href: "/classes", note: "Live times and prices" },
       { label: "Gymnastics", href: "/programs/gymnastics", note: "18 months – 12 years" },
       { label: "Ninja", href: "/programs/ninjas", note: "Ages 3 – 12" },
       { label: "Tumbling", href: "/programs/tumbling", note: "Ages 6 and up" },

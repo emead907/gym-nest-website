@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CalendarDays, DollarSign, UserRound, X } from "lucide-react";
 import type { AgeBand, FinderProgram, SiteClass } from "../lib/classes";
-import { REGISTRATION_FEE } from "../lib/site";
+import { COMMITMENT, REGISTRATION_FEE, commitmentPrice } from "../lib/site";
 import { TrialForm } from "./TrialForm";
 
 const AGES: { key: AgeBand | "all"; label: string; hint?: string }[] = [
@@ -42,21 +42,14 @@ function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
+/** Only speaks up when a class is full or almost full (1–2 spots left). */
 function Spots({ c }: { c: SiteClass }) {
-  if (c.openings == null) return null;
+  if (c.openings == null || c.openings > 2) return null;
   const full = c.openings === 0;
-  const few = !full && c.openings <= 2;
-  const max = Math.max(c.max ?? 6, c.openings);
-  const pct = Math.round(((max - c.openings) / max) * 100);
   return (
-    <div className="mt-4">
-      <div className="h-2 overflow-hidden rounded-full bg-aqua-tint">
-        <div className={`h-full rounded-full ${full ? "bg-[#c2410c]" : few ? "bg-[#d48a00]" : "bg-navy"}`} style={{ width: `${pct}%` }} />
-      </div>
-      <p className={`mt-2 text-sm font-extrabold ${full ? "text-full" : few ? "text-amber" : "text-navy"}`}>
-        {full ? "Full – join the waitlist" : c.openings === 1 ? "Only 1 spot left" : `${c.openings} spots open`}
-      </p>
-    </div>
+    <p className={`mt-4 rounded-xl px-3 py-2 text-sm font-extrabold ${full ? "bg-[#fff4ee] text-full" : "bg-[#fff8e6] text-amber"}`}>
+      {full ? "Full – join the waitlist" : c.openings === 1 ? "Only 1 spot left!" : "Only 2 spots left!"}
+    </p>
   );
 }
 
@@ -67,7 +60,11 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
     const p = params.get("program");
     return p && (PROGRAMS as string[]).includes(p) ? (p as FinderProgram) : "All";
   });
-  const [age, setAgeRaw] = useState<AgeBand | "all">("all");
+  // ?age=45 from the home page age buttons
+  const [age, setAgeRaw] = useState<AgeBand | "all">(() => {
+    const a = params.get("age");
+    return AGES.some((x) => x.key === a) ? (a as AgeBand) : "all";
+  });
   const [day, setDayRaw] = useState<string>("all");
   const [open, setOpen] = useState<string | null>(null);
 
@@ -128,7 +125,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
       </div>
       <p className="mt-1 text-sm text-muted">
         Every new student starts with a no-risk first day. Tuition is monthly, plus a one-time {REGISTRATION_FEE} registration fee for new families.{" "}
-        {live ? "Open spots update live from our schedule." : "Open spots are updated throughout the day."}
+        {live ? "Times and prices update live from our schedule." : "Times and prices are updated throughout the day."}
       </p>
 
       {results.length === 0 && (
@@ -148,7 +145,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
                 <div className="col-span-full rounded-3xl bg-navy p-6 text-white sm:p-8">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-extrabold uppercase tracking-widest text-aqua">{full ? "Join the waitlist" : "Request this class"}</p>
+                      <p className="text-sm font-extrabold uppercase tracking-widest text-aqua">{full ? "Join the waitlist" : "Request info"}</p>
                       <h3 className="mt-2 font-display text-3xl font-semibold">{c.name}</h3>
                       <p className="mt-1 text-[#dcddf6]">{when(c)} · {c.ages}</p>
                     </div>
@@ -181,13 +178,16 @@ function FinderCard({ c, isOpen, full, onRequest, children }: { c: SiteClass; is
         <p className="flex items-center gap-2 font-bold text-ink"><CalendarDays aria-hidden className="h-4 w-4 text-navy" />{when(c)}</p>
         <p className="mt-1.5 flex items-center gap-2 text-muted"><UserRound aria-hidden className="h-4 w-4" />{c.coach ? `Coach ${c.coach}` : "Coach to be announced"}</p>
         {c.tuition != null && <p className="mt-1.5 flex items-center gap-2 text-muted"><DollarSign aria-hidden className="h-4 w-4" />${c.tuition} a month, billed monthly</p>}
+        {commitmentPrice(c.tuition) != null && (
+          <p className="mt-1.5 rounded-xl bg-aqua-tint px-3 py-2 text-sm font-bold text-navy">Save: ${commitmentPrice(c.tuition)}/month with a {COMMITMENT.months}-month commitment</p>
+        )}
         <Spots c={c} />
         <div className="mt-auto pt-5">
           {full ? (
             <button type="button" onClick={onRequest} className="min-h-12 w-full rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Join waitlist</button>
           ) : (
             <>
-              <button type="button" onClick={onRequest} className="min-h-12 w-full rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Request this class</button>
+              <button type="button" onClick={onRequest} className="min-h-12 w-full rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Request info on this class</button>
               <a href={c.regLink} className="mt-2 block text-center text-sm font-extrabold text-navy underline-offset-4 hover:underline">or enroll now in our registration system →</a>
             </>
           )}
