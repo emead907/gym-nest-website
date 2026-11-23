@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LOCATIONS, PHONE, SITE_NAME, SITE_URL, SOCIAL, type LocationKey } from "./site";
+import { GYM, PHONE, SITE_NAME, SITE_URL, SOCIAL } from "./site";
 
 /** Page metadata with canonical URL, Open Graph and Twitter cards. */
 export function pageMeta({ title, description, path }: { title: string; description: string; path: string }): Metadata {
@@ -12,37 +12,25 @@ export function pageMeta({ title, description, path }: { title: string; descript
   };
 }
 
-/** schema.org data for one gym location (Google Business / local search). */
-export function locationSchema(k: LocationKey) {
-  const l = LOCATIONS[k];
+const GYM_ID = `${SITE_URL}/#gym`;
+
+/** schema.org data for the gym (Google Business / local search). */
+export function gymSchema() {
   return {
     "@type": ["SportsActivityLocation", "LocalBusiness"],
-    "@id": `${SITE_URL}/#${k}`,
-    name: `${SITE_NAME} – ${l.name}`,
-    url: `${SITE_URL}/locations/${k}`,
-    telephone: PHONE,
-    email: l.email,
-    image: `${SITE_URL}/opengraph-image`,
-    priceRange: "$$",
-    address: { "@type": "PostalAddress", streetAddress: l.street, addressLocality: l.city, addressRegion: l.region, postalCode: l.zip, addressCountry: "US" },
-    areaServed: l.serves.map((c) => ({ "@type": "City", name: `${c}, ID` })),
-    hasMap: l.mapsUrl,
-    parentOrganization: { "@id": `${SITE_URL}/#org` },
-    sameAs: [SOCIAL.instagram, SOCIAL.facebook],
-  };
-}
-
-export function organizationSchema() {
-  return {
-    "@type": "Organization",
-    "@id": `${SITE_URL}/#org`,
+    "@id": GYM_ID,
     name: SITE_NAME,
-    alternateName: ["The Gym Nest", "Gym Nest", "Supernova Athletics"],
+    alternateName: ["The Gym Nest", "Gym Nest Nampa", "The Gym Nest Activity Center", "Supernova Athletics"],
     url: SITE_URL,
     telephone: PHONE,
+    email: GYM.email,
     logo: `${SITE_URL}/icon`,
+    image: `${SITE_URL}/opengraph-image`,
+    priceRange: "$$",
+    address: { "@type": "PostalAddress", streetAddress: GYM.street, addressLocality: GYM.city, addressRegion: GYM.region, postalCode: GYM.zip, addressCountry: "US" },
+    areaServed: GYM.serves.map((c) => ({ "@type": "City", name: `${c}, ID` })),
+    hasMap: GYM.mapsUrl,
     sameAs: [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.supernova],
-    department: [{ "@id": `${SITE_URL}/#nampa` }, { "@id": `${SITE_URL}/#eagle` }],
   };
 }
 
@@ -60,8 +48,8 @@ export function faqSchema(faqs: { q: string; a: string }[]) {
   };
 }
 
-/** A program offered at one location, as a schema.org Service. */
-export function serviceSchema({ name, description, path, loc }: { name: string; description: string; path: string; loc: LocationKey }) {
+/** A program offered at the gym, as a schema.org Service. */
+export function serviceSchema({ name, description, path }: { name: string; description: string; path: string }) {
   return {
     "@type": "Service",
     name,
@@ -69,10 +57,12 @@ export function serviceSchema({ name, description, path, loc }: { name: string; 
     url: `${SITE_URL}${path}`,
     serviceType: name,
     audience: { "@type": "PeopleAudience", suggestedMinAge: 1.5, suggestedMaxAge: 12 },
-    provider: { "@id": `${SITE_URL}/#${loc}` },
-    areaServed: LOCATIONS[loc].serves.map((c) => ({ "@type": "City", name: `${c}, ID` })),
+    provider: { "@id": GYM_ID },
+    areaServed: GYM.serves.map((c) => ({ "@type": "City", name: `${c}, ID` })),
   };
 }
+
+export const providerRef = { "@id": GYM_ID };
 
 export function graph(...nodes: object[]) {
   return { "@context": "https://schema.org", "@graph": nodes };

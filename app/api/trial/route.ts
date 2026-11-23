@@ -1,13 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { isLocation, s, sendToHub } from "../../lib/hub";
-import { LOCATIONS } from "../../lib/site";
+import { s, sendToHub, sendToZapier } from "../../lib/hub";
+import { GYM } from "../../lib/site";
 
 /**
- * Waitlist and evaluation requests from the program
- * pages and the class finder. Each request goes two places at once:
+ * Class, waitlist and evaluation requests from the program pages and the
+ * class finder. Each request goes two places at once:
  *
- *  1. The Hub: that gym's trial board (Nampa or Eagle).
- *  2. Zapier (ZAPIER_WEBHOOK_URL): emails the gym and notes whether the
+ *  1. The Hub: The Gym Nest – Nampa trial board.
+ *  2. Zapier (ZAPIER_WEBHOOK_URL): emails the front desk and notes whether the
  *     family is already in Jackrabbit (it never creates accounts).
  *
  * The family is told it went through if either one worked, so a hiccup in one
@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
   const data = (await req.json().catch(() => null)) as Record<string, unknown> | null;
   if (!data) return NextResponse.json({ error: "Bad request" }, { status: 400 });
   if (s(data.website)) return NextResponse.json({ ok: true }); // honeypot: a bot
-  if (!isLocation(data.location)) return NextResponse.json({ error: "Pick a gym." }, { status: 422 });
 
   const parentFirst = s(data.parentFirst, 80);
   const parentLast = s(data.parentLast, 80);
@@ -29,12 +28,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Please fill in your name, email, phone and your child's name." }, { status: 422 });
   }
 
-  const loc = LOCATIONS[data.location];
   const mode = data.mode === "waitlist" || data.mode === "evaluation" ? data.mode : "trial";
   const lead = {
+    kind: mode,
     mode,
-    location: loc.name,
-    gymEmail: loc.notifyEmail,
+    location: GYM.name,
+    gymEmail: GYM.notifyEmail,
     className: s(data.className),
     requestedTime: s(data.requestedTime),
     parentFirst,
@@ -58,7 +57,7 @@ export async function POST(req: NextRequest) {
   ].filter(Boolean).join(" ");
 
   const [hub, zap] = await Promise.all([
-    sendToHub(data.location, {
+    sendToHub({
       id: `web-${s(data.classId) || "class"}-${Date.now()}`,
       class: lead.className,
       requested_time: lead.requestedTime,
@@ -77,29 +76,4 @@ export async function POST(req: NextRequest) {
   return hub.ok || zap
     ? NextResponse.json({ ok: true })
     : NextResponse.json({ error: "Could not send" }, { status: 502 });
-}
-
-async function sendToZapier(lead: Record<string, string>): Promise<boolean> {
-  const url = process.env.ZAPIER_WEBHOOK_URL;
-  if (!url) {
-    if (process.env.NODE_ENV !== "production") {
-      console.log("[dev] ZAPIER_WEBHOOK_URL not set, so no email or Jackrabbit family:", lead);
-      return true;
-    }
-    console.error("ZAPIER_WEBHOOK_URL is not set in Vercel, so trial requests aren't emailed or added to Jackrabbit.");
-    return false;
-  }
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) console.error("Zapier rejected the trial request:", res.status);
-    return res.ok;
-  } catch (err) {
-    console.error("Could not reach Zapier:", err);
-    return false;
-  }
 }

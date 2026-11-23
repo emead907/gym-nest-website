@@ -1,26 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { LOCATIONS, type LocationKey } from "../lib/site";
+import { PHONE } from "../lib/site";
+import { Honeypot } from "./Honeypot";
 
 export type TrialMode = "trial" | "waitlist" | "evaluation";
 
 export interface TrialRequest {
-  location: LocationKey;
   classId?: string;
   className: string;
   /** "Tuesdays · 5:15–6:00pm" */
   requestedTime: string;
   mode: TrialMode;
   source: "program-page" | "class-finder";
-  /** Jackrabbit registration for this class, offered after they submit. */
+  /** Jackrabbit registration with this class picked, offered after they submit. */
   regLink?: string;
 }
 
 /**
- * Waitlist, evaluation and existing-family trial requests. Goes to the Hub,
- * emails the gym (see /api/trial). Families register in Jackrabbit themselves.
- * New-family trials skip this and use Jackrabbit's own trial registration.
+ * Class requests, waitlist and evaluation requests. Goes to the Hub and emails
+ * the front desk (see /api/trial). After a class request the family can jump
+ * straight into Jackrabbit registration with that class already picked.
  */
 export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "light" | "dark" }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -48,7 +48,6 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
   }
 
   if (state === "sent") {
-    const gym = LOCATIONS[req.location].name;
     return (
       <div className={`rounded-2xl p-6 ${dark ? "bg-white/10" : "bg-aqua-tint"}`} role="status">
         <p className={`font-display text-2xl font-semibold ${dark ? "" : "text-navy"}`}>
@@ -61,14 +60,14 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
               Enroll here
             </a>
             <p className={`mt-3 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
-              Or our {gym} front desk will reach out soon to help you through the process. Your first day is no-risk.
+              Or our front desk will reach out soon to help you through the process. Your first day is no-risk.
             </p>
           </>
         ) : (
           <p className={`mt-2 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
             {req.mode === "waitlist"
               ? `We'll reach out as soon as a spot opens in ${req.className}.`
-              : `Our ${gym} front desk will reach out within one business day to set it up.`}
+              : "Our front desk will reach out within one business day to set it up."}
           </p>
         )}
       </div>
@@ -76,7 +75,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
   }
 
   return (
-    <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
+    <form onSubmit={submit} className="relative grid gap-4 sm:grid-cols-2">
       <label className={label}>Parent first name<input name="parentFirst" required autoComplete="given-name" className={field} /></label>
       <label className={label}>Parent last name<input name="parentLast" required autoComplete="family-name" className={field} /></label>
       <label className={label}>Email<input name="email" type="email" required autoComplete="email" className={field} /></label>
@@ -89,10 +88,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
         <input name="smsOptIn" type="checkbox" className="h-5 w-5 accent-orchid" />
         Text me about this class. Msg &amp; data rates may apply. Reply STOP to opt out.
       </label>
-      {/* Bots fill every field; people never see this one. */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label>Leave this blank<input name="website" tabIndex={-1} autoComplete="off" /></label>
-      </div>
+      <Honeypot />
       <button
         type="submit"
         disabled={state === "sending"}
@@ -100,7 +96,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
       >
         {state === "sending" ? "Sending…" : req.mode === "waitlist" ? "Add us to the waitlist" : req.mode === "evaluation" ? "Request an evaluation" : "Request this class"}
       </button>
-      {state === "error" && <p className={`text-sm font-bold sm:col-span-2 ${dark ? "text-orchid" : "text-full"}`}>Something went wrong. Please call us at 208-278-2011.</p>}
+      {state === "error" && <p className={`text-sm font-bold sm:col-span-2 ${dark ? "text-orchid" : "text-full"}`}>Something went wrong. Please call us at {PHONE}.</p>}
     </form>
   );
 }
