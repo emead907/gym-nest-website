@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { CalendarDays, MapPin, UserRound, X } from "lucide-react";
+import { CalendarDays, DollarSign, UserRound, X } from "lucide-react";
 import type { AgeBand, FinderProgram, SiteClass } from "../lib/classes";
-import { LOCATIONS, LOCATION_KEYS, type LocationKey } from "../lib/site";
-import { useLocation } from "./LocationProvider";
-import { LocationSwitch } from "./LocationSwitch";
+import { COMMITMENT, REGISTRATION_FEE, commitmentPrice } from "../lib/site";
 import { TrialForm } from "./TrialForm";
 
 const AGES: { key: AgeBand | "all"; label: string; hint?: string }[] = [
@@ -25,10 +23,10 @@ const mins = (t: string) => {
   if (!m) return 0;
   return ((Number(m[1]) % 12) + (m[3].toUpperCase() === "PM" ? 12 : 0)) * 60 + Number(m[2]);
 };
-const when = (c: SiteClass) => {
+export const when = (c: SiteClass) => {
   const days = c.days.length === 1 ? DAY_FULL[c.days[0]] ?? c.days[0] : c.days.join(" & ");
   const sameHalf = c.start.slice(-2) === c.end.slice(-2);
-  return `${days} · ${sameHalf ? c.start.slice(0, -3) : c.start}–${c.end}`.replace(/ (AM|PM)/g, (m) => m.trim().toLowerCase()).replace("·", " · ").replace(/\s+/g, " ");
+  return `${days} · ${sameHalf ? c.start.slice(0, -3) : c.start}–${c.end}`.replace(/ (AM|PM)/g, (m) => m.trim().toLowerCase()).replace(/\s+/g, " ");
 };
 
 function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -44,78 +42,49 @@ function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
+/** Only speaks up when a class is full or almost full (1–2 spots left). */
 function Spots({ c }: { c: SiteClass }) {
-  if (c.openings == null) return null;
+  if (c.openings == null || c.openings > 2) return null;
   const full = c.openings === 0;
-  const few = !full && c.openings <= 2;
-  const max = Math.max(c.max ?? 6, c.openings);
-  const pct = Math.round(((max - c.openings) / max) * 100);
   return (
-    <div className="mt-4">
-      <div className="h-2 overflow-hidden rounded-full bg-aqua-tint">
-        <div className={`h-full rounded-full ${full ? "bg-[#c2410c]" : few ? "bg-[#d48a00]" : "bg-navy"}`} style={{ width: `${pct}%` }} />
-      </div>
-      <p className={`mt-2 text-sm font-extrabold ${full ? "text-full" : few ? "text-amber" : "text-navy"}`}>
-        {full ? "Full – join the waitlist" : c.openings === 1 ? "Only 1 spot left" : `${c.openings} spots open`}
-      </p>
-    </div>
+    <p className={`mt-4 rounded-xl px-3 py-2 text-sm font-extrabold ${full ? "bg-[#fff4ee] text-full" : "bg-[#fff8e6] text-amber"}`}>
+      {full ? "Full – join the waitlist" : c.openings === 1 ? "Only 1 spot left!" : "Only 2 spots left!"}
+    </p>
   );
 }
 
 export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boolean }) {
   const params = useSearchParams();
-  const { location, setLocation } = useLocation();
-  const [age, setAge] = useState<AgeBand | "all">("all");
-  const [program, setProgram] = useState<FinderProgram | "All">("All");
-  const [day, setDay] = useState<string>("all");
-  const [open, setOpen] = useState<{ id: string; mode: "trial" | "register" } | null>(null);
-
-  // ?location=eagle&program=Ninja from links around the site
-  useEffect(() => {
-    const l = params.get("location");
-    if (l === "nampa" || l === "eagle") setLocation(l);
+  // ?program=Ninja from links around the site
+  const [program, setProgramRaw] = useState<FinderProgram | "All">(() => {
     const p = params.get("program");
-    if (p && (PROGRAMS as string[]).includes(p)) setProgram(p as FinderProgram);
-  }, [params, setLocation]);
+    return p && (PROGRAMS as string[]).includes(p) ? (p as FinderProgram) : "All";
+  });
+  // ?age=45 from the home page age buttons
+  const [age, setAgeRaw] = useState<AgeBand | "all">(() => {
+    const a = params.get("age");
+    return AGES.some((x) => x.key === a) ? (a as AgeBand) : "all";
+  });
+  const [day, setDayRaw] = useState<string>("all");
+  const [open, setOpen] = useState<string | null>(null);
 
-  useEffect(() => setOpen(null), [location, age, program, day]);
+  // Changing a filter closes any open request form.
+  const setProgram = (p: FinderProgram | "All") => { setProgramRaw(p); setOpen(null); };
+  const setAge = (a: AgeBand | "all") => { setAgeRaw(a); setOpen(null); };
+  const setDay = (d: string) => { setDayRaw(d); setOpen(null); };
 
   const results = useMemo(
     () =>
       classes
-        .filter((c) => (!location || c.location === location) && (age === "all" || c.bands.includes(age)) && (program === "All" || c.program === program) && (day === "all" || c.days.includes(day)))
-        .sort((a, b) => (a.location === b.location ? 0 : a.location === "nampa" ? -1 : 1) || DAYS.indexOf(a.days[0]) - DAYS.indexOf(b.days[0]) || mins(a.start) - mins(b.start) || a.name.localeCompare(b.name)),
-    [classes, location, age, program, day],
+        .filter((c) => (age === "all" || c.bands.includes(age)) && (program === "All" || c.program === program) && (day === "all" || c.days.includes(day)))
+        .sort((a, b) => DAYS.indexOf(a.days[0]) - DAYS.indexOf(b.days[0]) || mins(a.start) - mins(b.start) || a.name.localeCompare(b.name)),
+    [classes, age, program, day],
   );
   const filtered = age !== "all" || program !== "All" || day !== "all";
-  const loc = location ? LOCATIONS[location] : null;
-  const otherCount = location ? classes.filter((c) => c.location !== location && (age === "all" || c.bands.includes(age)) && (program === "All" || c.program === program) && (day === "all" || c.days.includes(day))).length : 0;
 
   return (
     <div>
-      {/* Which gym: always visible, one tap to switch */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border-2 border-navy bg-white p-5 sm:p-6">
-        {loc ? (
-          <div>
-            <p className="text-sm font-extrabold uppercase tracking-widest text-orchid-dark">Showing classes at</p>
-            <p className="mt-1 font-display text-3xl font-bold text-navy">The Gym Nest {loc.name}</p>
-            <p className="mt-1 flex items-center gap-1.5 text-muted"><MapPin aria-hidden className="h-4 w-4" />{loc.street}, {loc.city}</p>
-          </div>
-        ) : (
-          <div>
-            <p className="text-sm font-extrabold uppercase tracking-widest text-orchid-dark">Step 1</p>
-            <p className="mt-1 font-display text-3xl font-bold text-navy">Which gym works for you?</p>
-            <p className="mt-1 text-muted">Showing both gyms until you pick one.</p>
-          </div>
-        )}
-        <div className="flex flex-col items-start gap-1 sm:items-end">
-          <LocationSwitch size="lg" />
-          {loc && <span className="px-2 text-sm text-muted">Tap to switch gyms</span>}
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="mt-6 divide-y divide-line rounded-3xl border border-line bg-aqua-tint px-5 sm:px-7">
+      <div className="divide-y divide-line rounded-3xl border border-line bg-aqua-tint px-5 sm:px-7">
         <div className="flex flex-col gap-3 py-5 sm:flex-row sm:items-center">
           <div className="w-40 shrink-0">
             <p className="font-extrabold text-ink">Child&rsquo;s age</p>
@@ -147,7 +116,6 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
       <div className="mt-10 flex flex-wrap items-end justify-between gap-3">
         <h2 className="font-display text-3xl font-bold text-navy" aria-live="polite">
           {results.length === 1 ? "1 class to explore" : `${results.length} classes to explore`}
-          {loc && <span className="text-muted"> in {loc.name}</span>}
         </h2>
         {filtered && (
           <button type="button" onClick={() => { setAge("all"); setProgram("All"); setDay("all"); }} className="min-h-11 border-b-2 border-navy font-extrabold text-navy">
@@ -155,88 +123,73 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
           </button>
         )}
       </div>
-      <p className="mt-1 text-sm text-muted">Every new student starts with a no-risk first day. {live ? "Open spots update live from our schedule." : "Open spots are updated throughout the day."}</p>
+      <p className="mt-1 text-sm text-muted">
+        Every new student starts with a no-risk first day. Tuition is monthly, plus a one-time {REGISTRATION_FEE} registration fee for new families.{" "}
+        {live ? "Times and prices update live from our schedule." : "Times and prices are updated throughout the day."}
+      </p>
 
       {results.length === 0 && (
         <div className="mt-6 rounded-3xl bg-orchid-tint p-8 text-center">
-          <p className="text-lg font-extrabold text-ink">No classes match those filters{loc ? ` in ${loc.name}` : ""}.</p>
-          <p className="mt-2 text-muted">
-            Try another day{location && otherCount > 0 ? <>, or <button type="button" className="font-extrabold text-navy underline" onClick={() => setLocation(location === "nampa" ? "eagle" : "nampa")}>see {otherCount} at our {LOCATIONS[location === "nampa" ? "eagle" : "nampa"].name} gym</button></> : ""}.
-          </p>
+          <p className="text-lg font-extrabold text-ink">No classes match those filters.</p>
+          <p className="mt-2 text-muted">Try another day or program, or call us and we&rsquo;ll help you find a fit.</p>
         </div>
       )}
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {results.map((c) => {
-          const isOpen = open?.id === c.id;
+          const isOpen = open === c.id;
           const full = c.openings === 0;
           return (
-            <FinderCard key={c.id} c={c} isOpen={isOpen} full={full} onTrial={() => setOpen({ id: c.id, mode: "trial" })} onRegister={() => setOpen({ id: c.id, mode: "register" })}>
+            <FinderCard key={c.id} c={c} isOpen={isOpen} full={full} onRequest={() => setOpen(c.id)}>
               {isOpen && (
                 <div className="col-span-full rounded-3xl bg-navy p-6 text-white sm:p-8">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-extrabold uppercase tracking-widest text-aqua">
-                        {open.mode === "register" ? "Enroll" : full ? "Join the waitlist" : "Request this class"} · The Gym Nest {LOCATIONS[c.location].name}
-                      </p>
+                      <p className="text-sm font-extrabold uppercase tracking-widest text-aqua">{full ? "Join the waitlist" : "Request info"}</p>
                       <h3 className="mt-2 font-display text-3xl font-semibold">{c.name}</h3>
                       <p className="mt-1 text-[#dcddf6]">{when(c)} · {c.ages}</p>
                     </div>
                     <button type="button" onClick={() => setOpen(null)} aria-label="Close" className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/30 hover:bg-white/10"><X aria-hidden className="h-5 w-5" /></button>
                   </div>
-                  {open.mode === "trial" ? (
-                    <div className="mt-6 max-w-3xl">
-                      <TrialForm tone="dark" req={{ location: c.location, classId: c.id, className: c.name, requestedTime: when(c), mode: full ? "waitlist" : "trial", source: "class-finder", regLink: c.regLink }} />
-                    </div>
-                  ) : (
-                    <div className="mt-6 max-w-2xl rounded-2xl bg-white/10 p-6">
-                      <p className="font-display text-2xl font-semibold">Enroll with a no-risk first day</p>
-                      <p className="mt-2 text-[#dcddf6]">You&rsquo;ll finish in our secure registration system with this class picked. It takes about 3 minutes:</p>
-                      <ol className="mt-3 list-decimal space-y-1 pl-5 text-[#dcddf6]">
-                        <li>Your family and child&rsquo;s info</li>
-                        <li>Policies and waiver</li>
-                        <li>Payment method ($50 registration fee for new families)</li>
-                      </ol>
-                      <a href={c.regLink} className="mt-5 inline-flex min-h-12 items-center rounded-full bg-orchid px-7 font-extrabold text-navy-dark hover:brightness-105">Continue to secure registration</a>
-                    </div>
-                  )}
+                  <div className="mt-6 max-w-3xl">
+                    <TrialForm tone="dark" req={{ classId: c.id, className: c.name, requestedTime: when(c), mode: full ? "waitlist" : "trial", source: "class-finder", regLink: c.regLink }} />
+                  </div>
                 </div>
               )}
             </FinderCard>
           );
         })}
       </div>
-
-      {!location && (
-        <p className="mt-8 text-center text-muted">
-          Not sure which gym? {LOCATION_KEYS.map((k, i) => <span key={k}>{i ? " · " : ""}<strong className="text-ink">{LOCATIONS[k].name}</strong>: {LOCATIONS[k].street}</span>)}
-        </p>
-      )}
     </div>
   );
 }
 
-function FinderCard({ c, isOpen, full, onTrial, onRegister, children }: { c: SiteClass; isOpen: boolean; full: boolean; onTrial: () => void; onRegister: () => void; children: React.ReactNode }) {
+function FinderCard({ c, isOpen, full, onRequest, children }: { c: SiteClass; isOpen: boolean; full: boolean; onRequest: () => void; children: React.ReactNode }) {
   return (
     <>
       <article className={`flex flex-col rounded-3xl border-2 bg-white p-6 transition ${isOpen ? "border-navy shadow-lg" : "border-line"}`}>
         <div className="flex items-center justify-between gap-2">
           <span className="rounded-full bg-aqua-tint px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-navy">{c.program}</span>
-          <span className="flex items-center gap-1 rounded-full bg-orchid-tint px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-orchid-dark">
-            <MapPin aria-hidden className="h-3 w-3" />{LOCATIONS[c.location].name}
-          </span>
+          {c.tuition != null && <span className="rounded-full bg-orchid-tint px-3 py-1 text-xs font-extrabold text-orchid-dark">${c.tuition}/month</span>}
         </div>
         <h3 className="mt-4 font-display text-2xl font-semibold text-navy">{c.name}</h3>
         <p className="text-muted">Ages {c.ages}{c.parentAndMe ? " · Parent & me" : ""}</p>
         <div className="my-4 border-t border-line" />
         <p className="flex items-center gap-2 font-bold text-ink"><CalendarDays aria-hidden className="h-4 w-4 text-navy" />{when(c)}</p>
         <p className="mt-1.5 flex items-center gap-2 text-muted"><UserRound aria-hidden className="h-4 w-4" />{c.coach ? `Coach ${c.coach}` : "Coach to be announced"}</p>
+        {c.tuition != null && <p className="mt-1.5 flex items-center gap-2 text-muted"><DollarSign aria-hidden className="h-4 w-4" />${c.tuition} a month, billed monthly</p>}
+        {commitmentPrice(c.tuition) != null && (
+          <p className="mt-1.5 rounded-xl bg-aqua-tint px-3 py-2 text-sm font-bold text-navy">Save: ${commitmentPrice(c.tuition)}/month with a {COMMITMENT.months}-month commitment</p>
+        )}
         <Spots c={c} />
-        <div className="mt-5 flex gap-3">
+        <div className="mt-auto pt-5">
           {full ? (
-            <button type="button" onClick={onTrial} className="min-h-12 flex-1 rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Join waitlist</button>
+            <button type="button" onClick={onRequest} className="min-h-12 w-full rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">Join waitlist</button>
           ) : (
-            <button type="button" onClick={onTrial} className="min-h-12 flex-1 rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Request this class</button>
+            <>
+              <button type="button" onClick={onRequest} className="min-h-12 w-full rounded-full bg-navy font-extrabold text-white hover:bg-navy-dark">Request info on this class</button>
+              <a href={c.regLink} className="mt-2 block text-center text-sm font-extrabold text-navy underline-offset-4 hover:underline">or enroll now in our registration system →</a>
+            </>
           )}
         </div>
       </article>

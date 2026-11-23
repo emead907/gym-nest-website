@@ -1,24 +1,22 @@
 import Link from "next/link";
-import { Cake, CalendarHeart, GraduationCap, MapPin, Moon, Sparkles, Sun } from "lucide-react";
+import { BadgeCheck, Cake, CalendarHeart, CalendarRange, GraduationCap, HeartHandshake, MapPin, Moon, Phone, Sparkles, Sun, Users } from "lucide-react";
 import { Decor } from "./components/PageHero";
 import { Faq } from "./components/Faq";
 import { Cta } from "./components/Cta";
 import { JsonLd } from "./components/JsonLd";
-import { LocationCards } from "./components/LocationCards";
-import { LocationSwitch } from "./components/LocationSwitch";
-import { getClasses } from "./lib/classes";
-import { PROGRAMS, PROGRAM_KEYS, programPath } from "./lib/site";
+import { GYM, PHONE, PHONE_HREF, PROGRAMS, PROGRAM_KEYS, programPath } from "./lib/site";
 import { faqSchema, graph, pageMeta } from "./lib/seo";
 
 export const revalidate = 600;
 
+const TITLE = "The Gym Nest Nampa | Kids Gymnastics, Ninja & Cheer in Nampa, ID";
 export const metadata = {
   ...pageMeta({
-    title: "The Gym Nest | Kids Gymnastics, Ninja & Cheer in Nampa and Eagle, ID",
-    description: "Kids gymnastics, ninja, tumbling and cheer classes, preschool, open play, camps and birthday parties at The Gym Nest in Nampa and Eagle, Idaho. Ages 18 months and up. No-risk first day.",
+    title: TITLE,
+    description: "Kids gymnastics, ninja, tumbling and cheer classes, preschool, open play, camps and birthday parties at The Gym Nest in Nampa, Idaho. Ages 18 months and up. No-risk first day.",
     path: "/",
   }),
-  title: { absolute: "The Gym Nest | Kids Gymnastics, Ninja & Cheer in Nampa and Eagle, ID" },
+  title: { absolute: TITLE },
 };
 
 const TILES: { key: (typeof PROGRAM_KEYS)[number]; ages: string; color: string }[] = [
@@ -37,17 +35,30 @@ const MORE = [
   { href: "/camps", icon: CalendarHeart, title: "Summer camp", text: "Themed half and full days of gym, crafts, science and games. Ages 4–12." },
 ];
 
+const WHY = [
+  { icon: BadgeCheck, title: "No-risk first day", text: "Not the right fit? Tell us within 24 hours of the first class and you won't be charged." },
+  { icon: CalendarRange, title: "Month to month", text: "No long contracts. Switch classes or days whenever life changes." },
+  { icon: Users, title: "Small classes", text: "Every kid gets turns, attention and a coach who knows their name." },
+  { icon: HeartHandshake, title: "Happy, confident kids", text: "Creating happiness through fitness, movement and positivity." },
+];
+
+/** Hero age buttons → the class finder filtered to that age. Keys match the finder's age filters. */
+const AGE_PICKS = [
+  { age: "tot", label: "18–36 mo", note: "Parent & me" },
+  { age: "3", label: "3 years", note: "Tiny Tumblers, Mini Ninjas" },
+  { age: "45", label: "4–5 years", note: "Gymnastics & ninja" },
+  { age: "612", label: "6–12 years", note: "Gym, ninja, tumbling, cheer" },
+];
+
 const FAQS = [
   { q: "What ages does The Gym Nest teach?", a: "Kids 18 months and up. Toddlers start in Happy Hoppers with a parent, and classes go up through age 12, plus preschool for ages 3–5." },
   { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
-  { q: "Where are your gyms?", a: "The Gym Nest Nampa is at 849 S. Rising Sun Dr, Nampa, ID 83686. The Gym Nest Eagle is at 17 N Fisher Park Way, Eagle, ID 83616." },
+  { q: "How much are classes?", a: "Tuition is monthly and depends on the class. Every class in our class finder shows its monthly price, and our pricing page lists them all. New families pay a one-time $50 registration fee." },
+  { q: "Where is the gym?", a: `${GYM.street}, ${GYM.city}, ID ${GYM.zip}. Families come from ${GYM.serves.join(", ")}.` },
   { q: "Do you have boys' classes?", a: "Yes. Every class is for boys and girls, and ninja classes are a favorite with lots of boys." },
 ];
 
 export default async function Home() {
-  const { classes } = await getClasses();
-  const openSpots = classes.reduce((n, c) => n + (c.openings ?? 0), 0);
-
   return (
     <>
       <JsonLd data={graph(faqSchema(FAQS))} />
@@ -56,7 +67,7 @@ export default async function Home() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_1fr] lg:py-24">
           <div>
             <p className="text-sm font-extrabold uppercase tracking-widest text-orchid-dark">Gymnastics · Ninja · Cheer · Preschool</p>
-            <h1 className="mt-3 font-display text-5xl font-bold leading-[1.02] text-navy sm:text-7xl">Kids gymnastics in Nampa &amp; Eagle, Idaho</h1>
+            <h1 className="mt-3 font-display text-5xl font-bold leading-[1.02] text-navy sm:text-7xl">Kids gymnastics in Nampa, Idaho</h1>
             <p className="mt-6 max-w-xl text-xl leading-relaxed text-muted">Creating happiness through fitness, movement and positivity, for boys and girls 18 months and up. Every new student starts with a no-risk first day.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/classes" className="inline-flex min-h-14 items-center rounded-full bg-navy px-8 text-lg font-extrabold text-white hover:bg-navy-dark">Find a class</Link>
@@ -64,20 +75,20 @@ export default async function Home() {
             </div>
           </div>
           <div className="rounded-[2rem] bg-white p-7 shadow-sm">
-            <p className="flex items-center gap-2 font-extrabold text-navy"><MapPin aria-hidden className="h-5 w-5" />Choose your gym</p>
-            <p className="mt-1 text-muted">We&rsquo;ll show classes, parties and events for that location.</p>
-            <div className="mt-5"><LocationSwitch size="lg" /></div>
+            <p className="font-display text-3xl font-bold text-navy">How old is your child?</p>
+            <p className="mt-1 text-muted">We&rsquo;ll show the classes that fit.</p>
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-aqua-tint p-4">
-                <p className="font-display text-4xl font-bold text-navy">{openSpots}</p>
-                <p className="text-sm font-bold text-muted">open class spots right now</p>
-              </div>
-              <div className="rounded-2xl bg-orchid-tint p-4">
-                <p className="font-display text-4xl font-bold text-navy">2</p>
-                <p className="text-sm font-bold text-muted">gyms: Nampa &amp; Eagle</p>
-              </div>
+              {AGE_PICKS.map((a, i) => (
+                <Link key={a.age} href={`/classes?age=${a.age}`} className={`group rounded-2xl p-4 transition hover:-translate-y-0.5 hover:shadow-md ${i % 3 === 0 ? "bg-aqua-tint" : "bg-orchid-tint"}`}>
+                  <span className="block font-display text-2xl font-bold text-navy">{a.label}</span>
+                  <span className="mt-0.5 block text-sm font-bold text-muted">{a.note}</span>
+                </Link>
+              ))}
             </div>
-            <Link href="/classes" className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full border-2 border-navy font-extrabold text-navy hover:bg-aqua-tint">See live open spots →</Link>
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm font-extrabold text-muted">
+              <a href={GYM.mapsUrl} className="flex items-center gap-1.5 hover:text-navy"><MapPin aria-hidden className="h-4 w-4" />{GYM.street}</a>
+              <a href={PHONE_HREF} className="flex items-center gap-1.5 hover:text-navy"><Phone aria-hidden className="h-4 w-4" />{PHONE}</a>
+            </div>
           </div>
         </div>
       </section>
@@ -101,10 +112,25 @@ export default async function Home() {
             <Sparkles aria-hidden className="h-8 w-8 text-lime" />
             <div>
               <h3 className="mt-4 font-display text-3xl font-semibold">Not sure where to start?</h3>
-              <p className="mt-2 text-[#dcddf6]">Tell us your child&rsquo;s age and the days that work. We&rsquo;ll show what&rsquo;s open.</p>
+              <p className="mt-2 text-[#dcddf6]">Tell us your child&rsquo;s age and the days that work. We&rsquo;ll show what&rsquo;s open and what it costs.</p>
               <span className="mt-5 inline-block font-extrabold group-hover:underline">Open the class finder →</span>
             </div>
           </Link>
+        </div>
+      </section>
+
+      <section className="bg-navy text-white">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+          <h2 className="font-display text-4xl font-bold">Why Nampa families choose the Nest</h2>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {WHY.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="rounded-3xl bg-white/10 p-6">
+                <Icon aria-hidden className="h-8 w-8 text-aqua" />
+                <h3 className="mt-3 font-display text-xl font-semibold">{title}</h3>
+                <p className="mt-1 text-[#dcddf6]">{text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -123,10 +149,16 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-        <h2 className="font-display text-4xl font-bold text-navy">Two gyms in the Treasure Valley</h2>
-        <p className="mt-2 text-lg text-muted">Same great classes, two convenient spots.</p>
-        <div className="mt-8"><LocationCards href={(k) => `/locations/${k}`} label="Visit" note={(k) => (k === "nampa" ? "Serving Nampa, Caldwell, Kuna and Middleton." : "Serving Eagle, Star, Meridian and northwest Boise.")} /></div>
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center">
+        <div>
+          <h2 className="font-display text-4xl font-bold text-navy">Come see the gym</h2>
+          <p className="mt-3 text-lg text-muted">We&rsquo;re at {GYM.street} in Nampa, an easy drive from {GYM.serves.filter((c) => c !== "Nampa").join(", ")}.</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href={GYM.mapsUrl} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-navy px-7 font-extrabold text-white hover:bg-navy-dark"><MapPin aria-hidden className="h-5 w-5" />Directions</a>
+            <a href={PHONE_HREF} className="inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-navy px-7 font-extrabold text-navy hover:bg-aqua-tint"><Phone aria-hidden className="h-5 w-5" />{PHONE}</a>
+          </div>
+        </div>
+        <iframe title="Map to The Gym Nest Nampa" src={GYM.mapsEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full rounded-3xl border border-line" />
       </section>
 
       <Faq faqs={FAQS} />
