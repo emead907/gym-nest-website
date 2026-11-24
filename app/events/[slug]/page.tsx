@@ -67,6 +67,14 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       )}
 
       {event === "open-play" && (
+        <section className="mx-auto max-w-4xl px-4 pt-14 sm:px-6">
+          <h2 className="font-display text-3xl font-bold text-navy">Fun for parents and kids</h2>
+          <p className="mt-4 text-lg leading-relaxed text-ink">Open play is fun for parents and children! Adults supervise while kids play and explore in the gym. It&rsquo;s a great opportunity to meet other parents and children. We set up obstacles for the kids to play on.</p>
+          <p className="mt-4 text-lg leading-relaxed text-ink">Our open play is drop-in friendly, so come on by and let your kids go wild. No food or drinks are allowed in the gym area. Bare feet and athletic clothing are encouraged.</p>
+        </section>
+      )}
+
+      {event === "open-play" && (
         <Details
           rows={[
             ["When", OPEN_PLAY.when],
@@ -74,7 +82,6 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             ["Drop-in", OPEN_PLAY.price],
             ["Pass", `${OPEN_PLAY.pass} (non-refundable)`],
             ...(openPlayPass ? [["Monthly pass", `$${openPlayPass.tuition} a month for unlimited open play`] as [string, string]] : []),
-            ["Good to know", "Adults stay and supervise. No food or drinks in the gym. Bare feet and athletic clothes are best."],
           ]}
           actions={[
             ...(openPlayPass ? [{ href: openPlayPass.regLink, label: "Sign up for the monthly pass" }] : []),
