@@ -24,7 +24,7 @@ export function gymSchema() {
     url: SITE_URL,
     telephone: PHONE,
     email: GYM.email,
-    logo: `${SITE_URL}/icon`,
+    logo: `${SITE_URL}/icon.png`,
     image: `${SITE_URL}/opengraph-image`,
     priceRange: "$$",
     address: { "@type": "PostalAddress", streetAddress: GYM.street, addressLocality: GYM.city, addressRegion: GYM.region, postalCode: GYM.zip, addressCountry: "US" },
