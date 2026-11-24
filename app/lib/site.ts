@@ -4,7 +4,8 @@
  * Class times, open spots and monthly tuition come live from Jackrabbit (see classes.ts).
  */
 
-export const SITE_URL = "https://thegymneststudio.com";
+/** This site's web address. thegymneststudio.com is the landing page that links here. */
+export const SITE_URL = "https://thegymnestnampa.com";
 export const SITE_NAME = "The Gym Nest Nampa";
 export const PHONE = "208-278-2011";
 export const PHONE_HREF = "tel:+12082782011";
