@@ -91,7 +91,7 @@ export const PROGRAMS: Record<ProgramKey, Program> = {
     finder: "Gymnastics",
     faqs: [
       { q: "What age can my child start gymnastics?", a: "As young as 18 months in Happy Hoppers, a parent-and-me class. Kids 3 and up take classes on their own." },
-      { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
+      { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, after 24 hours prorated tuition for the rest of the month and the $50 registration fee are charged to your account, and tuition bills automatically on the 1st after that." },
       { q: "What should my child wear?", a: "Comfortable athletic clothes or a leotard, bare feet, and hair pulled back. Please leave jewelry at home." },
       { q: "Do you have competitive gymnastics?", a: "Our gymnastics classes are recreational and non-competitive. For competition, check out Supernova Athletics, our all-star cheer program." },
     ],

@@ -53,7 +53,7 @@ const AGE_PICKS = [
 
 const FAQS = [
   { q: "What ages does The Gym Nest teach?", a: "Kids 18 months and up. Toddlers start in Happy Hoppers with a parent, and classes go up through age 12, plus preschool for ages 3–5." },
-  { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
+  { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, after 24 hours prorated tuition for the rest of the month and the $50 registration fee are charged to your account, and tuition bills automatically on the 1st after that." },
   { q: "How much are classes?", a: "Tuition is monthly and depends on the class. Every class in our class finder shows its monthly price, and our pricing page lists them all. New families pay a one-time $50 registration fee." },
   { q: "Where is the gym?", a: `${GYM.street}, ${GYM.city}, ID ${GYM.zip}. Families come from ${GYM.serves.join(", ")}.` },
   { q: "Do you have boys' classes?", a: "Yes. Every class is for boys and girls, and ninja classes are a favorite with lots of boys." },

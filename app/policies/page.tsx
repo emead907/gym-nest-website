@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { PageHero } from "../components/PageHero";
 import { Cta } from "../components/Cta";
-import { GYM, PHONE, PHONE_HREF, POLICIES } from "../lib/site";
+import { GYM, PHONE, PHONE_HREF, POLICIES, REGISTRATION_FEE } from "../lib/site";
 import { pageMeta } from "../lib/seo";
 
 export const metadata = pageMeta({ title: "Policies", description: "How the no-risk first day works, plus registration fee, billing, cancellation and make-up class policies at The Gym Nest in Nampa, Idaho.", path: "/policies" });
@@ -10,8 +10,8 @@ export const metadata = pageMeta({ title: "Policies", description: "How the no-r
 const NO_RISK_STEPS = [
   { title: "Enroll in a class", text: "Request info or enroll online for the class and time that fits your family." },
   { title: "Come to your first class", text: "Your child tries the class with a coach, and you get to see how they like it." },
-  { title: "Not the right fit? Let us know within 24 hours", text: `Call ${PHONE} or email ${GYM.email} within 24 hours of that first class and you won't be charged.` },
-  { title: "Loved it? You're all set", text: "If we don't hear from you, the membership continues and tuition bills automatically on the 1st of each month." },
+  { title: "Not the right fit? Let us know within 24 hours", text: `Call ${PHONE} or email ${GYM.email} within 24 hours of that first class and you won't be charged anything, not even the registration fee.` },
+  { title: "Loved it? You're all set", text: `If we don't hear from you, after 24 hours prorated tuition for the rest of the month and the ${REGISTRATION_FEE} registration fee are charged to your account. After that, tuition bills automatically on the 1st of each month.` },
 ];
 
 export default function Policies() {

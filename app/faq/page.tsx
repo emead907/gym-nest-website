@@ -8,7 +8,7 @@ import { faqSchema, graph, pageMeta } from "../lib/seo";
 export const metadata = pageMeta({ title: "FAQ", description: "Answers to common questions about classes, ages, tuition, parties and preschool at The Gym Nest in Nampa, Idaho.", path: "/faq" });
 
 const GENERAL = [
-  { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, your membership continues and tuition bills automatically." },
+  { q: "What is a no-risk first day?", a: "Enroll in a class and come to your first day. If it isn't the right fit, let us know within 24 hours of that first class and you won't be charged. If we don't hear from you, after 24 hours prorated tuition for the rest of the month and the $50 registration fee are charged to your account, and tuition bills automatically on the 1st after that." },
   { q: "How much are classes?", a: "Tuition is monthly and depends on the class. Our pricing page and class finder show each class's monthly price." },
   { q: "Is there a registration fee?", a: `A one-time ${REGISTRATION_FEE} registration fee for new families.` },
   { q: "How do I cancel?", a: "Give written notice by the 15th of the month to stop the next month's charge." },
