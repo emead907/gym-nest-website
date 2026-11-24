@@ -3,6 +3,7 @@ import { PageHero } from "../components/PageHero";
 import { ClassFinder } from "../components/ClassFinder";
 import { JsonLd } from "../components/JsonLd";
 import { Cta } from "../components/Cta";
+import { NoRiskLink } from "../components/NoRiskLink";
 import { getClasses } from "../lib/classes";
 import { breadcrumbSchema, graph, pageMeta, providerRef } from "../lib/seo";
 
@@ -31,7 +32,7 @@ export default async function ClassesPage() {
   return (
     <>
       <JsonLd data={graph(breadcrumbSchema(crumbs), { "@type": "ItemList", name: "Kids classes at The Gym Nest Nampa", itemListElement: courses.map((item, i) => ({ "@type": "ListItem", position: i + 1, item })) })} />
-      <PageHero eyebrow="Class finder" title="What works for your family?" intro="Pick your child's age and the days that work. You'll see real class times and monthly prices, and can request or enroll right here with a no-risk first day." crumbs={crumbs} />
+      <PageHero eyebrow="Class finder" title="What works for your family?" intro={<>Pick your child&rsquo;s age and the days that work. You&rsquo;ll see real class times and monthly prices, and can request or enroll right here with a <NoRiskLink className="text-navy" />.</>} crumbs={crumbs} />
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         <Suspense fallback={<p className="text-muted">Loading classes…</p>}>
           <ClassFinder classes={classes} live={live} />

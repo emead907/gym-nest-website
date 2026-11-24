@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PHONE } from "../lib/site";
 import { Honeypot } from "./Honeypot";
+import { NoRiskLink } from "./NoRiskLink";
 
 export type TrialMode = "trial" | "waitlist" | "evaluation";
 
@@ -60,7 +61,7 @@ export function TrialForm({ req, tone = "light" }: { req: TrialRequest; tone?: "
               Enroll here
             </a>
             <p className={`mt-3 ${dark ? "text-[#dcddf6]" : "text-muted"}`}>
-              Or our front desk will reach out soon to help you through the process. Your first day is no-risk.
+              Or our front desk will reach out soon to help you through the process. Your first day is <NoRiskLink className={dark ? "text-white" : "text-navy"}>no-risk</NoRiskLink>.
             </p>
           </>
         ) : (

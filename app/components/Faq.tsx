@@ -1,4 +1,5 @@
 import { ChevronDown } from "lucide-react";
+import { NoRiskLink } from "./NoRiskLink";
 
 export function Faq({ faqs, title = "Questions parents ask" }: { faqs: { q: string; a: string }[]; title?: string }) {
   if (!faqs.length) return null;
@@ -13,6 +14,7 @@ export function Faq({ faqs, title = "Questions parents ask" }: { faqs: { q: stri
               <ChevronDown aria-hidden className="h-5 w-5 shrink-0 transition group-open:rotate-180" />
             </summary>
             <p className="mt-3 leading-relaxed text-muted">{f.a}</p>
+            {/no-risk/i.test(f.q + f.a) && <NoRiskLink className="mt-2 inline-block font-extrabold text-navy">Read the no-risk first day policy →</NoRiskLink>}
           </details>
         ))}
       </div>

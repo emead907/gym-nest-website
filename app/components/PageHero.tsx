@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 /** Page header with breadcrumbs. The breadcrumb trail also goes into structured data on each page. */
-export function PageHero({ eyebrow, title, intro, crumbs, children }: { eyebrow?: string; title: string; intro?: string; crumbs?: { name: string; path: string }[]; children?: React.ReactNode }) {
+export function PageHero({ eyebrow, title, intro, crumbs, children }: { eyebrow?: string; title: string; intro?: React.ReactNode; crumbs?: { name: string; path: string }[]; children?: React.ReactNode }) {
   return (
     <section className="relative overflow-hidden bg-aqua-tint">
       <Decor />

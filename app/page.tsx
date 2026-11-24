@@ -4,6 +4,7 @@ import { Decor } from "./components/PageHero";
 import { Faq } from "./components/Faq";
 import { Cta } from "./components/Cta";
 import { JsonLd } from "./components/JsonLd";
+import { NO_RISK_HREF, NoRiskLink } from "./components/NoRiskLink";
 import { GYM, PHONE, PHONE_HREF, PROGRAMS, PROGRAM_KEYS, programPath } from "./lib/site";
 import { faqSchema, graph, pageMeta } from "./lib/seo";
 
@@ -35,8 +36,8 @@ const MORE = [
   { href: "/camps", icon: CalendarHeart, title: "Summer camp", text: "Themed half and full days of gym, crafts, science and games. Ages 4–12." },
 ];
 
-const WHY = [
-  { icon: BadgeCheck, title: "No-risk first day", text: "Not the right fit? Tell us within 24 hours of the first class and you won't be charged." },
+const WHY: { icon: typeof BadgeCheck; title: string; text: string; href?: string }[] = [
+  { icon: BadgeCheck, title: "No-risk first day", text: "Not the right fit? Tell us within 24 hours of the first class and you won't be charged.", href: NO_RISK_HREF },
   { icon: CalendarRange, title: "Month to month", text: "No long contracts. Switch classes or days whenever life changes." },
   { icon: Users, title: "Small classes", text: "Every kid gets turns, attention and a coach who knows their name." },
   { icon: HeartHandshake, title: "Happy, confident kids", text: "Creating happiness through fitness, movement and positivity." },
@@ -68,7 +69,7 @@ export default async function Home() {
           <div>
             <p className="text-sm font-extrabold uppercase tracking-widest text-orchid-dark">Gymnastics · Ninja · Cheer · Preschool</p>
             <h1 className="mt-3 font-display text-5xl font-bold leading-[1.02] text-navy sm:text-7xl">Kids gymnastics in Nampa, Idaho</h1>
-            <p className="mt-6 max-w-xl text-xl leading-relaxed text-muted">Creating happiness through fitness, movement and positivity, for boys and girls 18 months and up. Every new student starts with a no-risk first day.</p>
+            <p className="mt-6 max-w-xl text-xl leading-relaxed text-muted">Creating happiness through fitness, movement and positivity, for boys and girls 18 months and up. Every new student starts with a <NoRiskLink className="text-navy" />.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/classes" className="inline-flex min-h-14 items-center rounded-full bg-navy px-8 text-lg font-extrabold text-white hover:bg-navy-dark">Find a class</Link>
               <Link href="/events/birthday-parties" className="inline-flex min-h-14 items-center rounded-full bg-orchid px-8 text-lg font-extrabold text-navy-dark hover:brightness-105">Book a birthday party</Link>
@@ -123,11 +124,12 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
           <h2 className="font-display text-4xl font-bold">Why Nampa families choose the Nest</h2>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {WHY.map(({ icon: Icon, title, text }) => (
+            {WHY.map(({ icon: Icon, title, text, href }) => (
               <div key={title} className="rounded-3xl bg-white/10 p-6">
                 <Icon aria-hidden className="h-8 w-8 text-aqua" />
                 <h3 className="mt-3 font-display text-xl font-semibold">{title}</h3>
                 <p className="mt-1 text-[#dcddf6]">{text}</p>
+                {href && <Link href={href} className="mt-3 inline-block font-extrabold text-aqua underline-offset-4 hover:underline">How it works →</Link>}
               </div>
             ))}
           </div>

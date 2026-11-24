@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
 import { Logo } from "./Logo";
+import { NoRiskLink } from "./NoRiskLink";
 import { PARENT_PORTAL_URL, PHONE, PHONE_HREF } from "../lib/site";
 
 type Item = { label: string; href?: string; children?: { label: string; href: string; note?: string }[] };
@@ -68,7 +69,7 @@ export function Header() {
     <header ref={ref} className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
       <div className="hidden bg-navy text-sm text-[#dcddf6] sm:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5 sm:px-6">
-          <p>849 S. Rising Sun Dr, Nampa · Every new student starts with a no-risk first day</p>
+          <p>849 S. Rising Sun Dr, Nampa · Every new student starts with a <NoRiskLink className="font-bold text-white" /></p>
           <a href={PHONE_HREF} className="flex items-center gap-1.5 font-extrabold text-white hover:underline"><Phone aria-hidden className="h-3.5 w-3.5" />{PHONE}</a>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { CalendarDays, DollarSign, UserRound, X } from "lucide-react";
 import type { AgeBand, FinderProgram, SiteClass } from "../lib/classes";
 import { COMMITMENT, REGISTRATION_FEE, commitmentPrice } from "../lib/site";
 import { TrialForm } from "./TrialForm";
+import { NoRiskLink } from "./NoRiskLink";
 
 const AGES: { key: AgeBand | "all"; label: string; hint?: string }[] = [
   { key: "all", label: "Any" },
@@ -124,7 +125,7 @@ export function ClassFinder({ classes, live }: { classes: SiteClass[]; live: boo
         )}
       </div>
       <p className="mt-1 text-sm text-muted">
-        Every new student starts with a no-risk first day. Tuition is monthly, plus a one-time {REGISTRATION_FEE} registration fee for new families.{" "}
+        Every new student starts with a <NoRiskLink className="font-bold text-navy" />. Tuition is monthly, plus a one-time {REGISTRATION_FEE} registration fee for new families.{" "}
         {live ? "Times and prices update live from our schedule." : "Times and prices are updated throughout the day."}
       </p>
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PHONE, PHONE_HREF } from "../lib/site";
+import { NoRiskLink } from "./NoRiskLink";
 
 export function Cta({ title = "Start with a no-risk first day.", text = "Find a class that fits your schedule and enroll in a few minutes. Not the right fit? Tell us within 24 hours of the first class and you won't be charged.", href = "/classes", label = "Find a class" }: { title?: string; text?: string; href?: string; label?: string }) {
   return (
@@ -8,6 +9,7 @@ export function Cta({ title = "Start with a no-risk first day.", text = "Find a 
         <div className="max-w-xl">
           <h2 className="font-display text-3xl font-bold sm:text-4xl">{title}</h2>
           <p className="mt-2 text-lg text-[#dcddf6]">{text}</p>
+          {/no-risk/i.test(title + text) && <NoRiskLink className="mt-3 inline-block font-extrabold text-aqua">How the no-risk first day works →</NoRiskLink>}
         </div>
         <div className="flex flex-wrap gap-3">
           <Link href={href} className="inline-flex min-h-12 items-center rounded-full bg-orchid px-7 font-extrabold text-navy-dark hover:brightness-105">{label}</Link>

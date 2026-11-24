@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { PageHero } from "../components/PageHero";
 import { Cta } from "../components/Cta";
 import { JsonLd } from "../components/JsonLd";
+import { NoRiskLink } from "../components/NoRiskLink";
 import { getClasses, getPasses, type SiteClass } from "../lib/classes";
 import { CAMP, COMMITMENT, KNO, OPEN_PLAY, commitmentPrice, PARTY, POLICIES, PRESCHOOL, PROGRAMS, PROGRAM_KEYS, REGISTRATION_FEE, programPath } from "../lib/site";
 import { breadcrumbSchema, graph, pageMeta } from "../lib/seo";
@@ -58,6 +59,7 @@ export default async function Pricing() {
           <div className="rounded-3xl bg-aqua-tint p-6">
             <p className="font-display text-4xl font-bold text-navy">$0 risk</p>
             <p className="mt-1 font-bold text-muted">Not the right fit? Tell us within 24 hours of the first class.</p>
+            <NoRiskLink className="mt-2 inline-block text-sm font-extrabold text-navy">How the no-risk first day works →</NoRiskLink>
           </div>
         </div>
 

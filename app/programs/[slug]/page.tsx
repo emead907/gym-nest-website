@@ -6,6 +6,7 @@ import { PageHero } from "../../components/PageHero";
 import { Faq } from "../../components/Faq";
 import { Cta } from "../../components/Cta";
 import { JsonLd } from "../../components/JsonLd";
+import { NoRiskLink } from "../../components/NoRiskLink";
 import { ProgramClasses, type ProgramCard, type Slot } from "../../components/ProgramClasses";
 import { getClasses, type SiteClass } from "../../lib/classes";
 import { GYM, PHONE, POLICIES, PROGRAMS, PROGRAM_KEYS, REGISTRATION_FEE, classesPath, programPath, type ProgramKey } from "../../lib/site";
@@ -62,7 +63,8 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink">{p.intro}</p>
         </div>
         <ul className="grid gap-3 rounded-3xl bg-aqua-tint p-6 sm:p-7">
-          {["No-risk first day", "Month-to-month, no long contract", "Small classes with coaches who know every kid", `${GYM.street}, ${GYM.city}`].map((t) => (
+          <li className="flex gap-3 font-bold text-ink"><Check aria-hidden className="mt-1 h-4 w-4 shrink-0 text-orchid-dark" /><NoRiskLink className="text-navy">No-risk first day</NoRiskLink></li>
+          {["Month-to-month, no long contract", "Small classes with coaches who know every kid", `${GYM.street}, ${GYM.city}`].map((t) => (
             <li key={t} className="flex gap-3 font-bold text-ink"><Check aria-hidden className="mt-1 h-4 w-4 shrink-0 text-orchid-dark" />{t}</li>
           ))}
         </ul>
@@ -72,7 +74,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="font-display text-3xl font-bold text-navy sm:text-4xl">{p.title} classes</h2>
-            <p className="mt-2 max-w-2xl text-muted">Pick a day and time and request the class. Your first day is no-risk: if it isn&rsquo;t the right fit, tell us within 24 hours of that class and you won&rsquo;t be charged. Times and prices come straight from our schedule.</p>
+            <p className="mt-2 max-w-2xl text-muted">Pick a day and time and request the class. Your first day is <NoRiskLink className="text-navy">no-risk</NoRiskLink>: if it isn&rsquo;t the right fit, tell us within 24 hours of that class and you won&rsquo;t be charged. Times and prices come straight from our schedule.</p>
           </div>
           <Link href={classesPath(p.finder)} className="font-extrabold text-navy underline">Compare every class in the class finder →</Link>
         </div>
